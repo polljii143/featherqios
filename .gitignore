@@ -1,2 +1,5 @@
 Pods
 Pods/*
+Podfile.lock
+xcuserdata
+xcuserdata/*
