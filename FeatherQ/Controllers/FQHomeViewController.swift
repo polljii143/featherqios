@@ -199,6 +199,9 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                 "last_called_service": self.queueInfo["last_called_service"]!
             ])
         }
+        else if segue.identifier == "qrCodeScanner" {
+            // Do nothing if QR code scanner is invoked
+        }
         else {
             let selectedCell = sender as? FQHomeTableViewCell
             let indexPath = tableView.indexPathForCell(selectedCell!)!

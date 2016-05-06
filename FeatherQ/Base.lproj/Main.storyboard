@@ -699,7 +699,11 @@
                     <tabBarItem key="tabBarItem" title="Item" id="0DN-fb-Urv"/>
                     <navigationItem key="navigationItem" title="Home" id="J7C-rb-ubv">
                         <barButtonItem key="backBarButtonItem" title=" " id="Kym-cU-Fr8"/>
-                        <barButtonItem key="rightBarButtonItem" image="QrCode" id="dYU-No-ZWv"/>
+                        <barButtonItem key="rightBarButtonItem" image="QrCode" id="dYU-No-ZWv">
+                            <connections>
+                                <segue destination="vEb-Qi-NT1" kind="show" identifier="qrCodeScanner" id="OHH-IF-Twg"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="7q4-Lk-bNk" id="B17-IK-tZQ"/>
@@ -2375,6 +2379,28 @@
             </objects>
             <point key="canvasLocation" x="1712" y="2427"/>
         </scene>
+        <!--QR Code Scanner-->
+        <scene sceneID="6x8-hs-8Zn">
+            <objects>
+                <viewController storyboardIdentifier="FQQRCodeScannerViewController" id="vEb-Qi-NT1" customClass="FQQRCodeScannerViewController" customModule="FeatherQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="79Y-VH-F3s"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZW2-RO-2f7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="L8S-rf-lJe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="QR Code Scanner" id="rXe-7R-Itz"/>
+                    <connections>
+                        <segue destination="bzI-NU-SRG" kind="show" identifier="qrScannedBusiness" id="uXe-DJ-q5y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="plo-od-qNt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2216" y="2427"/>
+        </scene>
         <!--FeatherQ-->
         <scene sceneID="BXe-7f-8N8">
             <objects>
@@ -2766,6 +2792,7 @@
         <image name="bg_default_establishment" width="700" height="350"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kpq-2t-7RZ"/>
+        <segue reference="ExF-sZ-HRv"/>
+        <segue reference="uXe-DJ-q5y"/>
     </inferredMetricsTieBreakers>
 </document>

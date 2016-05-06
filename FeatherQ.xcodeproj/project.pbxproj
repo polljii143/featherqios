@@ -21,6 +21,7 @@
 		80B5620B1CD0B09E0082ECED /* FQInboxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B5620A1CD0B09E0082ECED /* FQInboxTableViewCell.swift */; };
 		80BCE5581CA9187900512426 /* doorbell_x.wav in Resources */ = {isa = PBXBuildFile; fileRef = 80BCE5571CA9187900512426 /* doorbell_x.wav */; };
 		80BCE55A1CA95D2900512426 /* FQTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BCE5591CA95D2900512426 /* FQTransaction.swift */; };
+		80DFBB5A1CDC19790032E1F0 /* FQQRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFBB591CDC19790032E1F0 /* FQQRCodeScannerViewController.swift */; };
 		A5A31B7B4682E3EB73700E90 /* Pods_FeatherQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB9F36575FDD7FB1F385F006 /* Pods_FeatherQ.framework */; };
 		E52148971C507DF600C952A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52148961C507DF600C952A4 /* AppDelegate.swift */; };
 		E52148991C507DF600C952A4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52148981C507DF600C952A4 /* ViewController.swift */; };
@@ -72,6 +73,7 @@
 		80B5620A1CD0B09E0082ECED /* FQInboxTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQInboxTableViewCell.swift; sourceTree = "<group>"; };
 		80BCE5571CA9187900512426 /* doorbell_x.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = doorbell_x.wav; sourceTree = "<group>"; };
 		80BCE5591CA95D2900512426 /* FQTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQTransaction.swift; sourceTree = "<group>"; };
+		80DFBB591CDC19790032E1F0 /* FQQRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQQRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		829D5A59E0FA0DB8EB02AD60 /* Pods-FeatherQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatherQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ.release.xcconfig"; sourceTree = "<group>"; };
 		CB9F36575FDD7FB1F385F006 /* Pods_FeatherQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FeatherQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E52148931C507DF600C952A4 /* FeatherQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeatherQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -231,6 +233,7 @@
 				8047D2221CC8FED1006A40FB /* FQRemoteViewController.swift */,
 				80B562061CD0A2090082ECED /* FQMessageViewController.swift */,
 				809D4A221CD71ACD00C317B7 /* FQMoreTableViewController.swift */,
+				80DFBB591CDC19790032E1F0 /* FQQRCodeScannerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				E592CF331C5F647900FA2492 /* FQLoginViewController.swift in Sources */,
 				E592CF4D1C61DAF800FA2492 /* FQBroadcastCollectionViewCell.swift in Sources */,
 				E562C0511C55315200D0D3CB /* FQExploreViewController.swift in Sources */,
+				80DFBB5A1CDC19790032E1F0 /* FQQRCodeScannerViewController.swift in Sources */,
 				808D4C0D1CCDA5E300C913F8 /* FQPrototypeHomeViewController.swift in Sources */,
 				E5F040AC1C63655F00DB0D8E /* Session.swift in Sources */,
 				E592CF2D1C5F597500FA2492 /* FQSideMenuLinks.swift in Sources */,
