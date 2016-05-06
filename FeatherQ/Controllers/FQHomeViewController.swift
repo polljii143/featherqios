@@ -258,21 +258,8 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                 if section == 0 {
                     return "You are lined up in"
                 }
-                else if section == 1 && self.activeBusiness.count > 0 {
-                    return "Active Businesses"
-                }
-                else {
-                    return "All Businesses"
-                }
             }
-            else {
-                if section == 0 {
-                    return "Active Businesses"
-                }
-                else {
-                    return "All Businesses"
-                }
-            }
+            return nil
         }
         else {
             return nil
@@ -310,7 +297,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
         if Session.instance.inQueue && indexPath.section == 0 && !self.filterSearch.active {
             return 275.0
         }
-        return 125.0
+        return 121.0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
