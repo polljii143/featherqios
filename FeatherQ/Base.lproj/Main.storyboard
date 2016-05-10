@@ -241,7 +241,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="282.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ng Khai Development Corporation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Knq-Gf-pNC">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Knq-Gf-pNC">
                                                     <rect key="frame" x="80" y="8" width="232" height="46"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="46" id="3Sa-Nf-edp"/>
@@ -270,7 +270,7 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENGY Tech Bldg., Hernan Cortes Street, Mandaue City, Cebu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ufU-Ey-z7h">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENGY Tech Bldg., Hernan Cortes Street, Mandaue City, Cebu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ufU-Ey-z7h">
                                                     <rect key="frame" x="80" y="54" width="232" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -552,37 +552,28 @@
                                             <segue destination="4JW-LO-QMF" kind="show" identifier="showQueuedBroadcast" id="4Qr-n7-293"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FQHomeTableViewCell" rowHeight="125" id="7j0-ld-dbZ" customClass="FQHomeTableViewCell" customModule="FeatherQ" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="311" width="320" height="125"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FQHomeTableViewCell" rowHeight="121" id="7j0-ld-dbZ" customClass="FQHomeTableViewCell" customModule="FeatherQ" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="311" width="320" height="121"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7j0-ld-dbZ" id="Z1f-uL-h87">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="124.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="120.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qOR-sc-YuT">
-                                                    <rect key="frame" x="8" y="30.5" width="64" height="64"/>
+                                                    <rect key="frame" x="8" y="23" width="64" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="64" id="dak-sk-QBS"/>
                                                         <constraint firstAttribute="height" constant="64" id="fIV-SS-82Z"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ng Khai Development Corporation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5im-G9-S0Z">
-                                                    <rect key="frame" x="80" y="8" width="232" height="41"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="41" id="F3A-BQ-kv9"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENGY Tech Bldg., Hernan Cortes Street, Mandaue City, Cebu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bn7-o7-cft">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENGY Tech Bldg., Hernan Cortes Street, Mandaue City, Cebu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="bn7-o7-cft">
                                                     <rect key="frame" x="80" y="50" width="206" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Now Serving:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ur5-s6-I7u">
-                                                    <rect key="frame" x="80" y="103" width="69.5" height="13.5"/>
+                                                    <rect key="frame" x="80" y="99" width="69.5" height="13.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="58f-nW-SVo"/>
                                                         <constraint firstAttribute="width" constant="91" id="9Mt-gB-B1M"/>
@@ -597,7 +588,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="9999" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vJm-Dv-LuK">
-                                                    <rect key="frame" x="157" y="100.5" width="36" height="16"/>
+                                                    <rect key="frame" x="157" y="96.5" width="36" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="36" id="b5z-aT-Ez6"/>
                                                     </constraints>
@@ -611,16 +602,25 @@
                                                     </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Eye" translatesAutoresizingMaskIntoConstraints="NO" id="cq2-PC-fCw">
-                                                    <rect key="frame" x="294" y="53.5" width="18" height="18"/>
+                                                    <rect key="frame" x="294" y="50.5" width="18" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="18" id="u7y-6B-M60"/>
                                                         <constraint firstAttribute="height" constant="18" id="ya0-bK-59w"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Reminisense Corporation Service" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mny-sJ-Dlz">
-                                                    <rect key="frame" x="201" y="85" width="111" height="31.5"/>
+                                                    <rect key="frame" x="201" y="81" width="111" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
                                                     <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5im-G9-S0Z">
+                                                    <rect key="frame" x="80" y="8" width="232" height="41"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="F3A-BQ-kv9"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -639,6 +639,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="ur5-s6-I7u" secondAttribute="trailing" id="ULY-Xl-ctF"/>
                                                 <constraint firstItem="qOR-sc-YuT" firstAttribute="leading" secondItem="Z1f-uL-h87" secondAttribute="leadingMargin" id="V0x-EP-Z9E"/>
                                                 <constraint firstItem="qOR-sc-YuT" firstAttribute="leading" secondItem="Z1f-uL-h87" secondAttribute="leadingMargin" id="Vis-Xs-b3J"/>
+                                                <constraint firstItem="qOR-sc-YuT" firstAttribute="top" secondItem="Z1f-uL-h87" secondAttribute="topMargin" constant="15" id="aJz-7g-kg6"/>
                                                 <constraint firstItem="mny-sJ-Dlz" firstAttribute="leading" secondItem="vJm-Dv-LuK" secondAttribute="trailing" constant="8" id="eDk-yH-DKR"/>
                                                 <constraint firstItem="ur5-s6-I7u" firstAttribute="leading" secondItem="qOR-sc-YuT" secondAttribute="trailing" constant="8" id="fuO-G7-gph"/>
                                                 <constraint firstItem="cq2-PC-fCw" firstAttribute="trailing" secondItem="Z1f-uL-h87" secondAttribute="trailingMargin" id="g6X-nY-2NV"/>
@@ -655,6 +656,7 @@
                                                 <mask key="constraints">
                                                     <exclude reference="4YQ-6T-ltL"/>
                                                     <exclude reference="Vis-Xs-b3J"/>
+                                                    <exclude reference="gdU-17-uis"/>
                                                     <exclude reference="v7S-Dc-nTd"/>
                                                     <exclude reference="UCs-f8-8Qw"/>
                                                     <exclude reference="ULY-Xl-ctF"/>
@@ -699,7 +701,11 @@
                     <tabBarItem key="tabBarItem" title="Item" id="0DN-fb-Urv"/>
                     <navigationItem key="navigationItem" title="Home" id="J7C-rb-ubv">
                         <barButtonItem key="backBarButtonItem" title=" " id="Kym-cU-Fr8"/>
-                        <barButtonItem key="rightBarButtonItem" image="QrCode" id="dYU-No-ZWv"/>
+                        <barButtonItem key="rightBarButtonItem" image="QrCode" id="dYU-No-ZWv">
+                            <connections>
+                                <segue destination="vEb-Qi-NT1" kind="show" identifier="qrCodeScanner" id="OHH-IF-Twg"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="7q4-Lk-bNk" id="B17-IK-tZQ"/>
@@ -2375,6 +2381,28 @@
             </objects>
             <point key="canvasLocation" x="1712" y="2427"/>
         </scene>
+        <!--QR Code Scanner-->
+        <scene sceneID="6x8-hs-8Zn">
+            <objects>
+                <viewController storyboardIdentifier="FQQRCodeScannerViewController" id="vEb-Qi-NT1" customClass="FQQRCodeScannerViewController" customModule="FeatherQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="79Y-VH-F3s"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZW2-RO-2f7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="L8S-rf-lJe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="QR Code Scanner" id="rXe-7R-Itz"/>
+                    <connections>
+                        <segue destination="bzI-NU-SRG" kind="show" identifier="qrScannedBusiness" id="uXe-DJ-q5y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="plo-od-qNt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2216" y="2427"/>
+        </scene>
         <!--FeatherQ-->
         <scene sceneID="BXe-7f-8N8">
             <objects>
@@ -2424,7 +2452,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJt-7d-Phg">
                                                     <rect key="frame" x="60" y="8" width="252" height="27.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-du-uSp">
@@ -2483,7 +2511,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Woy-0y-jtg">
                                                     <rect key="frame" x="60" y="8" width="252" height="27.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -2527,7 +2555,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eF8-iT-0ar">
                                                     <rect key="frame" x="60" y="8" width="252" height="27.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -2766,6 +2794,7 @@
         <image name="bg_default_establishment" width="700" height="350"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kpq-2t-7RZ"/>
+        <segue reference="Vni-D6-TNW"/>
+        <segue reference="ExF-sZ-HRv"/>
     </inferredMetricsTieBreakers>
 </document>

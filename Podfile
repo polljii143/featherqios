@@ -12,4 +12,5 @@ target 'FeatherQ' do
   pod 'FBSDKShareKit'
   pod 'MarqueeLabel'
   pod 'IQKeyboardManagerSwift'
+  pod 'SwiftQRCode'
 end
