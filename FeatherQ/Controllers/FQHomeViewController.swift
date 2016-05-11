@@ -10,8 +10,11 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SwiftSpinner
+import CoreLocation
 
-class FQHomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+class FQHomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, CLLocationManagerDelegate {
+    
+    let locationManager = CLLocationManager()
 
     @IBOutlet weak var tableView: UITableView!
     var filterSearch = UISearchController()
@@ -26,6 +29,11 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
+        
         self.filterSearch = UISearchController(searchResultsController: nil)
         self.filterSearch.searchResultsUpdater = self
         self.filterSearch.dimsBackgroundDuringPresentation = false
@@ -252,20 +260,6 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
         return 2
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if !self.filterSearch.active {
-            if Session.instance.inQueue {
-                if section == 0 {
-                    return "You are lined up in"
-                }
-            }
-            return nil
-        }
-        else {
-            return nil
-        }
-    }
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.filterSearch.active {
             return self.filteredBusinesses.count
@@ -295,7 +289,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if Session.instance.inQueue && indexPath.section == 0 && !self.filterSearch.active {
-            return 275.0
+            return 285.0
         }
         return 121.0
     }
@@ -436,6 +430,24 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
         let array = (unwrappedBusinessNames as NSArray).filteredArrayUsingPredicate(searchPredicate)
         self.filteredBusinesses = array as! [String]
         self.tableView.reloadData()
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: { (placemarks, error) -> Void in
+            if error != nil {
+                debugPrint(error?.localizedDescription)
+            }
+            if placemarks!.count > 0 {
+                self.locationManager.stopUpdatingLocation()
+                Session.instance.latitude = self.locationManager.location!.coordinate.latitude // save the current location
+                Session.instance.longitude = self.locationManager.location!.coordinate.longitude // save the current location
+                debugPrint(Session.instance.latitude)
+                debugPrint(Session.instance.longitude)
+                debugPrint(placemarks![0].subLocality)
+                debugPrint(placemarks![0].locality)
+                debugPrint(placemarks![0].country)
+            }
+        })
     }
     
     @IBAction func checkIn(sender: AnyObject) {

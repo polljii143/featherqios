@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		804601C11CE2B1DE00A72F32 /* FQFormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804601C01CE2B1DE00A72F32 /* FQFormTableViewController.swift */; };
 		8047D21D1CC758B5006A40FB /* FQHomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8047D21C1CC758B5006A40FB /* FQHomeTableViewCell.swift */; };
 		8047D21F1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8047D21E1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift */; };
 		8047D2211CC85327006A40FB /* FQHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8047D2201CC85327006A40FB /* FQHistoryTableViewCell.swift */; };
@@ -59,6 +60,7 @@
 
 /* Begin PBXFileReference section */
 		0A2B78E666E0FA19AFC074C0 /* Pods-FeatherQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatherQ.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ.debug.xcconfig"; sourceTree = "<group>"; };
+		804601C01CE2B1DE00A72F32 /* FQFormTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQFormTableViewController.swift; sourceTree = "<group>"; };
 		8047D21C1CC758B5006A40FB /* FQHomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQHomeTableViewCell.swift; sourceTree = "<group>"; };
 		8047D21E1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQRemoteQueueTableViewCell.swift; sourceTree = "<group>"; };
 		8047D2201CC85327006A40FB /* FQHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQHistoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				80B562061CD0A2090082ECED /* FQMessageViewController.swift */,
 				809D4A221CD71ACD00C317B7 /* FQMoreTableViewController.swift */,
 				80DFBB591CDC19790032E1F0 /* FQQRCodeScannerViewController.swift */,
+				804601C01CE2B1DE00A72F32 /* FQFormTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				E562C0581C5603F200D0D3CB /* FQCategoriesCollectionViewCell.swift in Sources */,
 				E562C0471C55112900D0D3CB /* FQHomeLabelTableViewCell.swift in Sources */,
 				8047D2231CC8FED1006A40FB /* FQRemoteViewController.swift in Sources */,
+				804601C11CE2B1DE00A72F32 /* FQFormTableViewController.swift in Sources */,
 				E562C04B1C5511F200D0D3CB /* FQHomeRecentTableViewCell.swift in Sources */,
 				E52148B11C50A9A500C952A4 /* FQTestViewController.swift in Sources */,
 				80B562071CD0A2090082ECED /* FQMessageViewController.swift in Sources */,

@@ -21,6 +21,8 @@ class Session {
     var user_id = ""
     var inQueue = false
     var checkedIn = false
+    var longitude = 0.0
+    var latitude = 0.0
     
     init(){
         
