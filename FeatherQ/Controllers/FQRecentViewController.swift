@@ -29,11 +29,11 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
     var name = " "
     var businessAddress = " "
     var businessStatus = "0"
-    var priority_number = "0"
-    var time_issued = "0"
-    var time_called = "0"
-    var transaction_number = "0"
-    var transaction_date = "0"
+    var priorityNumber = "0"
+    var timeIssued = "0"
+    var timeCalled = "0"
+    var transactionNumber = "0"
+    var transactionDate = "0"
     var businessId = "0"
     
     override func viewDidLoad() {
@@ -49,12 +49,12 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.getMyBusinessHistory(self.transaction_number)
+        self.getMyBusinessHistory(self.transactionNumber)
     }
     
-    func getMyBusinessHistory(transaction_number: String) {
+    func getMyBusinessHistory(transactionNumber: String) {
         SwiftSpinner.show("Fetching..")
-        Alamofire.request(Router.getMyBusinessHistory(transaction_number: transaction_number)).responseJSON { response in
+        Alamofire.request(Router.getMyBusinessHistory(transactionNumber: transactionNumber)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -70,10 +70,10 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
             self.businessName.text = dataObj["business_name"] as? String
             self.businessStatus = "\(dataObj["status"]!)"
             self.yourNumber.text = dataObj["priority_number"] as? String
-            self.time_issued = "\(dataObj["time_issued"]!)"
-            self.time_called = "\(dataObj["time_called"]!)"
+            self.timeIssued = "\(dataObj["time_issued"]!)"
+            self.timeCalled = "\(dataObj["time_called"]!)"
             self.ratingValue = "\(dataObj["rating"]!)"
-            self.transaction_date = "\(dataObj["transaction_date"]!)"
+            self.transactionDate = "\(dataObj["transaction_date"]!)"
             self.businessId = "\(dataObj["business_id"]!)"
             self.renderHistoryData()
             SwiftSpinner.hide()
@@ -84,7 +84,7 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
         self.ratedButtonsChange(self.ratingValue)
         
         let dateFormatter = NSDateFormatter()
-        let stringDate = self.transaction_date
+        let stringDate = self.transactionDate
         let transactionDate = NSDate(timeIntervalSince1970: Double(stringDate)!)
         dateFormatter.dateStyle = .LongStyle
         self.fullDate.text = dateFormatter.stringFromDate(transactionDate)
@@ -134,12 +134,12 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
         if indexPath.row == 0 {
-            let transactionDate = NSDate(timeIntervalSince1970: Double(self.time_issued)!)
+            let transactionDate = NSDate(timeIntervalSince1970: Double(self.timeIssued)!)
             cell.profileData.text = dateFormatter.stringFromDate(transactionDate)
             cell.profileTitle.text = "Queued"
         }
         else if indexPath.row == 1 {
-            let transactionDate = NSDate(timeIntervalSince1970: Double(self.time_called)!)
+            let transactionDate = NSDate(timeIntervalSince1970: Double(self.timeCalled)!)
             cell.profileData.text = dateFormatter.stringFromDate(transactionDate)
             cell.profileTitle.text = "Called"
         }
@@ -151,23 +151,23 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     @IBAction func rating1(sender: AnyObject) {
-        self.getRateBusiness("1", fbId: Session.instance.fb_id, businessId: self.businessId, transactionNumber: self.transaction_number)
+        self.getRateBusiness("1", fbId: Session.instance.fbId, businessId: self.businessId, transactionNumber: self.transactionNumber)
         self.ratedButtonsChange("1")
     }
     @IBAction func rating2(sender: AnyObject) {
-        self.getRateBusiness("2", fbId: Session.instance.fb_id, businessId: self.businessId, transactionNumber: self.transaction_number)
+        self.getRateBusiness("2", fbId: Session.instance.fbId, businessId: self.businessId, transactionNumber: self.transactionNumber)
         self.ratedButtonsChange("2")
     }
     @IBAction func rating3(sender: AnyObject) {
-        self.getRateBusiness("3", fbId: Session.instance.fb_id, businessId: self.businessId, transactionNumber: self.transaction_number)
+        self.getRateBusiness("3", fbId: Session.instance.fbId, businessId: self.businessId, transactionNumber: self.transactionNumber)
         self.ratedButtonsChange("3")
     }
     @IBAction func rating4(sender: AnyObject) {
-        self.getRateBusiness("4", fbId: Session.instance.fb_id, businessId: self.businessId, transactionNumber: self.transaction_number)
+        self.getRateBusiness("4", fbId: Session.instance.fbId, businessId: self.businessId, transactionNumber: self.transactionNumber)
         self.ratedButtonsChange("4")
     }
     @IBAction func rating5(sender: AnyObject) {
-        self.getRateBusiness("5", fbId: Session.instance.fb_id, businessId: self.businessId, transactionNumber: self.transaction_number)
+        self.getRateBusiness("5", fbId: Session.instance.fbId, businessId: self.businessId, transactionNumber: self.transactionNumber)
         self.ratedButtonsChange("5")
     }
     

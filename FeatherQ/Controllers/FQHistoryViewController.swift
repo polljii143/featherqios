@@ -35,7 +35,7 @@ class FQHistoryViewController: UIViewController, UITableViewDataSource, UITableV
     func getMyAllHistory() {
         self.recentBusiness.removeAll()
         SwiftSpinner.show("Fetching..")
-        Alamofire.request(Router.getMyAllHistory(user_id: Session.instance.user_id)).responseJSON { response in
+        Alamofire.request(Router.getMyAllHistory(userId: Session.instance.userId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -64,7 +64,7 @@ class FQHistoryViewController: UIViewController, UITableViewDataSource, UITableV
         let destView = segue.destinationViewController as! FQRecentViewController
         if let selectedCell = sender as? FQHistoryTableViewCell {
             let indexPath = self.businessList.indexPathForCell(selectedCell)!
-            destView.transaction_number = self.recentBusiness[indexPath.row].transaction_number!
+            destView.transactionNumber = self.recentBusiness[indexPath.row].transactionNumber!
         }
     }
     
@@ -78,7 +78,7 @@ class FQHistoryViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FQHistoryTableViewCell") as! FQHistoryTableViewCell
-        cell.businessName.text = self.recentBusiness[indexPath.row].business_name
+        cell.businessName.text = self.recentBusiness[indexPath.row].businessName
         
         let dateFormatter = NSDateFormatter()
         let stringDate = self.recentBusiness[indexPath.row].date
@@ -86,7 +86,7 @@ class FQHistoryViewController: UIViewController, UITableViewDataSource, UITableV
         dateFormatter.dateStyle = .LongStyle
         cell.dateLastProcessed.text = dateFormatter.stringFromDate(transactionDate)
         
-        cell.currentNumber.text = self.recentBusiness[indexPath.row].priority_number
+        cell.currentNumber.text = self.recentBusiness[indexPath.row].priorityNumber
         
         var queueStatus = self.recentBusiness[indexPath.row].status
         if queueStatus == "1" {

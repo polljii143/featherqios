@@ -59,7 +59,7 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         self.readyDingSound()
         self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(FQBusinessViewController.timerCallbacks), userInfo: nil, repeats: true)
-        self.getBusinessNumbers(self.chosenBusiness!.businessId!, user_id: Session.instance.user_id)
+        self.getBusinessNumbers(self.chosenBusiness!.businessId!, userId: Session.instance.userId)
     }
     
     func timerCallbacks() {
@@ -75,12 +75,12 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func getBusinessNumbers(business_id: String, user_id: String) {
+    func getBusinessNumbers(businessId: String, userId: String) {
         SwiftSpinner.show("Fetching..")
         self.serviceNames.removeAll()
         self.serviceIds.removeAll()
         self.serviceEnabled.removeAll()
-        Alamofire.request(Router.getBusinessNumbers(business_id: business_id, user_id: user_id)).responseJSON { response in
+        Alamofire.request(Router.getBusinessNumbers(businessId: businessId, userId: userId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -101,13 +101,13 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
             SwiftSpinner.hide()
         }
     }
-    
-    func getBroadcastNumbers(business_id: String) {
+
+    func getBroadcastNumbers(businessId: String) {
         self.newNumbers.removeAll()
         self.announceTerminals.removeAll()
         self.announceServices.removeAll()
         let baseUrl = NSURL(string: Router.baseURL)!
-        let appendUrl = NSURL(string: "/json/" + business_id + ".json?nocache=\(NSDate().timeIntervalSince1970)", relativeToURL:baseUrl)!
+        let appendUrl = NSURL(string: "/json/" + businessId + ".json?nocache=\(NSDate().timeIntervalSince1970)", relativeToURL:baseUrl)!
         let requestUrl = NSMutableURLRequest(URL: appendUrl)
         Alamofire.request(requestUrl).responseJSON { response in
             if response.result.isFailure {
@@ -151,8 +151,16 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         // Pass the selected object to the new view controller.
         if segue.identifier == "viewMyInbox" {
             let destView = segue.destinationViewController as! FQMessageViewController
-            destView.business_id = self.chosenBusiness!.businessId!
-            destView.business_name = self.chosenBusiness!.name!
+            destView.businessId = self.chosenBusiness!.businessId!
+            destView.businessName = self.chosenBusiness!.name!
+        }
+        else if segue.identifier == "viewServiceDetails" {
+            let selectedCell = sender as? FQRemoteQueueTableViewCell
+            let indexPath = self.serviceList.indexPathForCell(selectedCell!)!
+            let destView = segue.destinationViewController as! FQFormsViewController
+            destView.businessName = self.chosenBusiness!.name!
+            destView.businessId = self.chosenBusiness!.businessId!
+            destView.serviceNameText = self.serviceNames[indexPath.row]
         }
     }
     
@@ -198,7 +206,7 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FQRemoteQueueTableViewCell", forIndexPath: indexPath) as! FQRemoteQueueTableViewCell
-        cell.rowCount.text = "\(indexPath.row + 1)"
+        //cell.rowCount.text = "\(indexPath.row + 1)"
         cell.serviceName.text = self.serviceNames[indexPath.row]
         if Session.instance.inQueue {
             cell.getNumLbl.text = "You are currently in another line."
@@ -215,15 +223,6 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in " + self.serviceNames[indexPath.row] + "?", preferredStyle: .Alert)
-        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
-            self.getQueueService(Session.instance.user_id, service_id: self.serviceIds[indexPath.row])
-        }))
-        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
-        self.presentViewController(alertBox, animated: true, completion: nil)
-    }
-    
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         if Session.instance.inQueue || !self.serviceEnabled[indexPath.row] {
             return nil
@@ -231,9 +230,9 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         return indexPath
     }
     
-    func getQueueService(user_id: String, service_id: String) {
+    func getQueueService(userId: String, serviceId: String) {
         SwiftSpinner.show("Lining up..")
-        Alamofire.request(Router.getQueueService(user_id: user_id, service_id: service_id)).responseJSON { response in
+        Alamofire.request(Router.getQueueService(userId: userId, serviceId: serviceId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String

@@ -46,7 +46,7 @@ class FQLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 let fbId: String = (result.objectForKey("id") as? String)!
                 let fbGender: String = (result.objectForKey("gender") as? String)!
                 
-                Alamofire.request(Router.postRegisterUser(fb_id: fbId, first_name: fbFirstName, last_name: fbLastName, email: fbEmail, gender: fbGender)).responseJSON { response in
+                Alamofire.request(Router.postRegisterUser(fbId: fbId, firstName: fbFirstName, lastName: fbLastName, email: fbEmail, gender: fbGender)).responseJSON { response in
                     if response.result.isFailure {
                         debugPrint(response.result.error)
                         let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -58,7 +58,7 @@ class FQLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                     let responseData = JSON(data: response.data!)
                     debugPrint(responseData)
                     
-                    Alamofire.request(Router.postFacebookLogin(fb_id: fbId)).responseJSON { response in
+                    Alamofire.request(Router.postFacebookLogin(fbId: fbId)).responseJSON { response in
                         if response.result.isFailure {
                             debugPrint(response.result.error)
                             let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -69,14 +69,14 @@ class FQLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                         }
                         let responseData = JSON(data: response.data!)
                         let dataObj = responseData["user"].dictionaryObject!
-                        Session.instance.fb_id = fbId
+                        Session.instance.fbId = fbId
                         Session.instance.firstName = fbFirstName
                         Session.instance.lastName = fbLastName
                         Session.instance.email = fbEmail
                         Session.instance.gender = fbGender
                         Session.instance.address = dataObj["local_address"] as! String
                         Session.instance.phone = dataObj["phone"] as! String
-                        Session.instance.user_id = "\(dataObj["user_id"]!)"
+                        Session.instance.userId = "\(dataObj["user_id"]!)"
                         SwiftSpinner.hide({
                             self.view.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FQTabBarViewController")
                         })

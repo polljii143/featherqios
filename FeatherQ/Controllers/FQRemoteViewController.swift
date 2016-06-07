@@ -35,7 +35,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
     var serviceEnabled = [Bool]()
     var timerCounter: NSTimer?
     var audioPlayer = AVAudioPlayer()
-    var transaction_number = ""
+    var transactionNumber = ""
     let dingSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("doorbell_x", ofType: "wav")!)
     @IBOutlet weak var checkInStatus: UILabel!
     
@@ -58,7 +58,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
     override func viewWillAppear(animated: Bool) {
         self.readyDingSound()
         self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(FQRemoteViewController.timerCallbacks), userInfo: nil, repeats: true)
-        self.getBusinessBroadcast(self.chosenBusiness!.businessId!, user_id: Session.instance.user_id)
+        self.getBusinessBroadcast(self.chosenBusiness!.businessId!, userId: Session.instance.userId)
     }
     
     override func didReceiveMemoryWarning() {
@@ -75,8 +75,8 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
         // Pass the selected object to the new view controller.
         if segue.identifier == "composeMessage" {
             let destView = segue.destinationViewController as! FQMessageViewController
-            destView.business_id = self.chosenBusiness!.businessId!
-            destView.business_name = self.chosenBusiness!.name!
+            destView.businessId = self.chosenBusiness!.businessId!
+            destView.businessName = self.chosenBusiness!.name!
             destView.queuedBusiness = self.chosenBusiness!.businessId!
         }
     }
@@ -110,15 +110,15 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
     @IBAction func checkInUser(sender: AnyObject) {
         let alertBox = UIAlertController(title: "Confirm", message: "Do you want to check-in now?", preferredStyle: .Alert)
         alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
-            self.getCheckinTransaction(self.transaction_number)
+            self.getCheckinTransaction(self.transactionNumber)
         }))
         alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
         self.presentViewController(alertBox, animated: true, completion: nil)
     }
     
-    func getQueueService(user_id: String, service_id: String) {
+    func getQueueService(userId: String, serviceId: String) {
         SwiftSpinner.show("Lining up..")
-        Alamofire.request(Router.getQueueService(user_id: user_id, service_id: service_id)).responseJSON { response in
+        Alamofire.request(Router.getQueueService(userId: userId, serviceId: serviceId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -133,8 +133,8 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
-    func getCheckedIn(transaction_number: String) {
-        Alamofire.request(Router.getCheckedIn(transaction_number: transaction_number)).responseJSON { response in
+    func getCheckedIn(transactionNumber: String) {
+        Alamofire.request(Router.getCheckedIn(transactionNumber: transactionNumber)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -174,12 +174,12 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
-    func getBroadcastNumbers(business_id: String) {
+    func getBroadcastNumbers(businessId: String) {
         self.newNumbers.removeAll()
         self.announceTerminals.removeAll()
         self.announceServices.removeAll()
         let baseUrl = NSURL(string: Router.baseURL)!
-        let appendUrl = NSURL(string: "/json/" + business_id + ".json?nocache=\(NSDate().timeIntervalSince1970)", relativeToURL:baseUrl)!
+        let appendUrl = NSURL(string: "/json/" + businessId + ".json?nocache=\(NSDate().timeIntervalSince1970)", relativeToURL:baseUrl)!
         let requestUrl = NSMutableURLRequest(URL: appendUrl)
         Alamofire.request(requestUrl).responseJSON { response in
             if response.result.isFailure {
@@ -209,9 +209,9 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
-    func getCheckinTransaction(transaction_number: String) {
+    func getCheckinTransaction(transactionNumber: String) {
         SwiftSpinner.show("Checking in..")
-        Alamofire.request(Router.getCheckinTransaction(transaction_number: transaction_number)).responseJSON { response in
+        Alamofire.request(Router.getCheckinTransaction(transactionNumber: transactionNumber)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -229,9 +229,9 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
-    func getBusinessBroadcast(business_id: String, user_id: String) {
+    func getBusinessBroadcast(businessId: String, userId: String) {
         SwiftSpinner.show("Fetching..")
-        Alamofire.request(Router.getBusinessBroadcast(business_id: business_id, user_id: user_id)).responseJSON { response in
+        Alamofire.request(Router.getBusinessBroadcast(businessId: businessId, userId: userId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -253,7 +253,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
             let ticker4 = (dataObj["ticker_message4"] as! String) + " "
             let ticker5 = (dataObj["ticker_message5"] as! String) + " "
             self.tickerNotes.text = ticker1 + ticker2 + ticker3 + ticker4 + ticker5
-            self.getCheckedIn(self.transaction_number)
+            self.getCheckedIn(self.transactionNumber)
         }
     }
 

@@ -24,8 +24,8 @@ class FQQRCodeScannerViewController: UIViewController {
         scanner.prepareScan(view) { (stringValue) -> () in
             debugPrint(stringValue)
             let businessUrl = stringValue.componentsSeparatedByString("/") // "http://new-featherq.local/broadcast/business/181"
-            let business_id = businessUrl[5];
-            self.getBusinessDetail(business_id)
+            let businessId = businessUrl[5];
+            self.getBusinessDetail(businessId)
         }
         scanner.scanFrame = view.bounds
     }
@@ -50,9 +50,9 @@ class FQQRCodeScannerViewController: UIViewController {
         destView.chosenBusiness = self.scannedBusiness!
     }
     
-    func getBusinessDetail(business_id: String) {
+    func getBusinessDetail(businessId: String) {
         SwiftSpinner.show("Locating business..")
-        Alamofire.request(Router.getBusinessDetail(id: business_id)).responseJSON { response in
+        Alamofire.request(Router.getBusinessDetail(id: businessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String

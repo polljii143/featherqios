@@ -16,8 +16,8 @@ class FQBusiness: FQModel {
     var latitude: String?
     var longitude: String?
     var distance: String?
-    var last_called_number: String?
-    var last_called_service: String?
+    var lastCalledNumber: String?
+    var lastCalledService: String?
     
     override init(modelAttr: [String : AnyObject]) {
         let formatter = NSNumberFormatter()
@@ -30,8 +30,8 @@ class FQBusiness: FQModel {
         self.latitude = "\(modelAttr["latitude"]!)"
         self.longitude = "\(modelAttr["longitude"]!)"
         self.distance = formatter.stringFromNumber(Float("\(modelAttr["distance"]!)")!)
-        self.last_called_number = modelAttr["last_called_number"] as? String
-        self.last_called_service = modelAttr["last_called_service"] as? String
+        self.lastCalledNumber = modelAttr["last_called_number"] as? String
+        self.lastCalledService = modelAttr["last_called_service"] as? String
         
         super.init(modelAttr: modelAttr)
     }

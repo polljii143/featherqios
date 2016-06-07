@@ -11,14 +11,14 @@ import Foundation
 class Session {
     static let instance = Session()
     
-    var fb_id = ""
+    var fbId = ""
     var firstName = ""
     var lastName = ""
     var phone = ""
     var email = ""
     var address = ""
     var gender = ""
-    var user_id = ""
+    var userId = ""
     var inQueue = false
     var checkedIn = false
     var longitude = 0.0

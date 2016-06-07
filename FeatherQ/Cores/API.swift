@@ -25,32 +25,33 @@ enum Router: URLRequestConvertible{
     case getBusinessDetail(id: String)
     case getActiveBusiness
     case getShowNumber(businessId: String)
-    case postRegisterUser(fb_id: String, first_name: String, last_name: String, email: String, gender: String)
+    case postRegisterUser(fbId: String, firstName: String, lastName: String, email: String, gender: String)
     case getUpdateContactCountry
     case getUserIndustryInfo(facebookId: String, limit: String)
     case getQueueInfo(facebookId: String, businessId: String)
     case getSearchIndustry(query: String)
     case getQueueBusiness(facebookId: String, businessId: String)
-    case getMyAllHistory(user_id: String)
-    case getMyBusinessHistory(transaction_number: String)
+    case getMyAllHistory(userId: String)
+    case getMyBusinessHistory(transactionNumber: String)
     case getRateBusiness(rating: String, facebookId: String, businessId: String, transactionNumber: String)
     case getTransactionRatingInfo(transactionNumber: String)
     case getIndustries
-    case postFacebookLogin(fb_id: String)
+    case postFacebookLogin(fbId: String)
     case getBusinessServiceDetails(facebookId: String)
     case getQueueNumber(serviceId: String, name: String, phone: String, email: String)
     case getAllMessages(facebookId: String)
     case getBusinessMessages(facebookId: String, businessId: String)
     case postSendtoBusiness(facebookId: String, businessId: String, message: String, phone: String)
     case getTransactionStats(transactionNumber: String)
-    case getBroadcastNumbers(business_id: String)
-    case getBusinessNumbers(business_id: String, user_id: String)
-    case getQueueService(user_id: String, service_id: String)
-    case getCheckedIn(transaction_number: String)
-    case getCheckinTransaction(transaction_number: String)
-    case getUserQueue(user_id: String)
-    case postSendMessage(user_id: String, business_id: String, message: String)
-    case getBusinessBroadcast(business_id: String, user_id: String)
+    case getBroadcastNumbers(businessId: String)
+    case getBusinessNumbers(businessId: String, userId: String)
+    case getQueueService(userId: String, serviceId: String)
+    case getCheckedIn(transactionNumber: String)
+    case getCheckinTransaction(transactionNumber: String)
+    case getUserQueue(userId: String)
+    case postSendMessage(userId: String, businessId: String, message: String)
+    case getBusinessBroadcast(businessId: String, userId: String)
+    case getFormElements(businessId: String)
     
     var method: Alamofire.Method {
         switch self {
@@ -97,10 +98,10 @@ enum Router: URLRequestConvertible{
             return "/rest/search-industry/" + query
         case .getQueueBusiness(let facebookId, let businessId):
             return "/rest/queue-business/" + facebookId + "/" + businessId
-        case .getMyAllHistory(let user_id):
-            return "/mobile/my-all-history/" + user_id + "/20"
-        case .getMyBusinessHistory(let transaction_number):
-            return "/mobile/my-business-history/" + transaction_number
+        case .getMyAllHistory(let userId):
+            return "/mobile/my-all-history/" + userId + "/20"
+        case .getMyBusinessHistory(let transactionNumber):
+            return "/mobile/my-business-history/" + transactionNumber
         case .getRateBusiness(let rating, let facebookId, let businessId, let transactionNumber):
             return "/rest/rate-business/" + rating + "/" + facebookId + "/" + businessId + "/" + transactionNumber + "/4"
         case .getTransactionRatingInfo(let transactionNumber):
@@ -121,22 +122,24 @@ enum Router: URLRequestConvertible{
             return "/rest/register-user"
         case .getPopularBusiness:
             return "/rest/popular-business"
-        case .getBroadcastNumbers(let business_id):
-            return "/json/"+business_id+".json"
-        case .getBusinessNumbers(let business_id, let user_id):
-            return "/mobile/business-numbers/" + business_id + "/" + user_id
-        case .getQueueService(let user_id, let service_id):
-            return "/rest/queue-service/" + user_id + "/" + service_id
-        case .getCheckedIn(let transaction_number):
-            return "/mobile/checked-in/" + transaction_number
-        case .getCheckinTransaction(let transaction_number):
-            return "/mobile/checkin-transaction/" + transaction_number
-        case .getUserQueue(let user_id):
-            return "/mobile/user-queue/" + user_id
+        case .getBroadcastNumbers(let businessId):
+            return "/json/"+businessId+".json"
+        case .getBusinessNumbers(let businessId, let userId):
+            return "/mobile/business-numbers/" + businessId + "/" + userId
+        case .getQueueService(let userId, let serviceId):
+            return "/rest/queue-service/" + userId + "/" + serviceId
+        case .getCheckedIn(let transactionNumber):
+            return "/mobile/checked-in/" + transactionNumber
+        case .getCheckinTransaction(let transactionNumber):
+            return "/mobile/checkin-transaction/" + transactionNumber
+        case .getUserQueue(let userId):
+            return "/mobile/user-queue/" + userId
         case .postSendMessage:
             return "/mobile/send-message"
-        case .getBusinessBroadcast(let business_id, let user_id):
-            return "/mobile/business-broadcast/" + business_id + "/" + user_id
+        case .getBusinessBroadcast(let businessId, let userId):
+            return "/mobile/business-broadcast/" + businessId + "/" + userId
+        case .getFormElements(let businessId):
+            return "/forms/fields/" + businessId
         default:
             return "/"
         }
@@ -173,26 +176,26 @@ enum Router: URLRequestConvertible{
                 "phone": phone
             ]
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
-        case .postRegisterUser(let fb_id, let first_name, let last_name, let email, let gender):
+        case .postRegisterUser(let fbId, let firstName, let lastName, let email, let gender):
             let params = [
-                "fb_id": fb_id,
-                "first_name": first_name,
-                "last_name": last_name,
+                "fb_id": fbId,
+                "first_name": firstName,
+                "last_name": lastName,
                 "email": email,
                 "gender": gender,
                 "phone": "",
                 "country": ""
             ]
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
-        case .postFacebookLogin(let fb_id):
+        case .postFacebookLogin(let fbId):
             let params = [
-                "facebook_id": fb_id
+                "facebook_id": fbId
             ]
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
-        case .postSendMessage(let user_id, let business_id, let message):
+        case .postSendMessage(let userId, let businessId, let message):
             let params = [
-                "user_id": user_id,
-                "business_id": business_id,
+                "user_id": userId,
+                "business_id": businessId,
                 "message": message
             ]
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0

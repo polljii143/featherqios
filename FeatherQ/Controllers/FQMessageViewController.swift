@@ -17,8 +17,8 @@ class FQMessageViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var inboxList: UITableView!
     @IBOutlet weak var sendMsgBtn: UIButton!
     
-    var business_id = "0"
-    var business_name = ""
+    var businessId = "0"
+    var businessName = ""
     var messageData = [["":""]]
     var queuedBusiness = "0"
 
@@ -35,7 +35,7 @@ class FQMessageViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     override func viewWillAppear(animated: Bool) {
-        if self.queuedBusiness == self.business_id {
+        if self.queuedBusiness == self.businessId {
             self.messageTxt.userInteractionEnabled = true
             self.sendMsgBtn.enabled = true
         }
@@ -44,8 +44,8 @@ class FQMessageViewController: UIViewController, UITableViewDelegate, UITableVie
             self.sendMsgBtn.enabled = false
             self.messageTxt.placeholder = "Allowed only to currently lined up business."
         }
-        self.navigationItem.title = self.business_name
-        self.getBusinessMessages(Session.instance.fb_id, business_id: self.business_id)
+        self.navigationItem.title = self.businessName
+        self.getBusinessMessages(Session.instance.fbId, businessId: self.businessId)
     }
 
     /*
@@ -97,12 +97,12 @@ class FQMessageViewController: UIViewController, UITableViewDelegate, UITableVie
 //        }))
 //        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
 //        self.presentViewController(alertBox, animated: true, completion: nil)
-        self.postSendMessage(Session.instance.user_id, business_id: self.business_id, message: self.messageTxt.text!)
+        self.postSendMessage(Session.instance.userId, businessId: self.businessId, message: self.messageTxt.text!)
     }
     
-    func postSendMessage(user_id: String, business_id: String, message: String) {
+    func postSendMessage(userId: String, businessId: String, message: String) {
         SwiftSpinner.show("Sending message..")
-        Alamofire.request(Router.postSendMessage(user_id: user_id, business_id: business_id, message: message)).responseJSON { response in
+        Alamofire.request(Router.postSendMessage(userId: userId, businessId: businessId, message: message)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -114,14 +114,14 @@ class FQMessageViewController: UIViewController, UITableViewDelegate, UITableVie
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
             self.messageTxt.text = ""
-            self.getBusinessMessages(Session.instance.fb_id, business_id: self.business_id)
+            self.getBusinessMessages(Session.instance.fbId, businessId: self.businessId)
         }
     }
     
-    func getBusinessMessages(facebook_id: String, business_id: String) {
+    func getBusinessMessages(facebookId: String, businessId: String) {
         SwiftSpinner.show("Fetching..")
         self.messageData.removeAll()
-        Alamofire.request(Router.getBusinessMessages(facebookId: facebook_id, businessId: business_id)).responseJSON { response in
+        Alamofire.request(Router.getBusinessMessages(facebookId: facebookId, businessId: businessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
