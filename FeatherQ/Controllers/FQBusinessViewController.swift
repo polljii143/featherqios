@@ -208,18 +208,18 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         let cell = tableView.dequeueReusableCellWithIdentifier("FQRemoteQueueTableViewCell", forIndexPath: indexPath) as! FQRemoteQueueTableViewCell
         //cell.rowCount.text = "\(indexPath.row + 1)"
         cell.serviceName.text = self.serviceNames[indexPath.row]
-        if Session.instance.inQueue {
-            cell.getNumLbl.text = "You are currently in another line."
-            cell.getNumLbl.backgroundColor = UIColor.lightGrayColor()
-        }
-        else if !self.serviceEnabled[indexPath.row] {
-            cell.getNumLbl.text = "NOT ALLOWED"
-            cell.getNumLbl.backgroundColor = UIColor.lightGrayColor()
-        }
-        else {
-            cell.getNumLbl.text = "Get a Number"
-            cell.getNumLbl.backgroundColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
-        }
+//        if Session.instance.inQueue {
+//            cell.getNumLbl.text = "You are currently in another line."
+//            cell.getNumLbl.backgroundColor = UIColor.lightGrayColor()
+//        }
+//        else if !self.serviceEnabled[indexPath.row] {
+//            cell.getNumLbl.text = "NOT ALLOWED"
+//            cell.getNumLbl.backgroundColor = UIColor.lightGrayColor()
+//        }
+//        else {
+//            cell.getNumLbl.text = "Get a Number"
+//            cell.getNumLbl.backgroundColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
+//        }
         return cell
     }
     

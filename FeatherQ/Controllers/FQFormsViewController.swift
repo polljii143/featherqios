@@ -17,6 +17,7 @@ class FQFormsViewController: UIViewController {
     @IBOutlet weak var availableNumber: UILabel!
     @IBOutlet weak var timeUntilCalled: UILabel!
     @IBOutlet weak var peopleInLine: UILabel!
+    @IBOutlet weak var formsTable: UITableView!
     
     var businessId = ""
     var serviceId = ""
@@ -37,6 +38,16 @@ class FQFormsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+     */
+    
     func getFormElements(businessId: String) {
         SwiftSpinner.show("Rendering form..")
         Alamofire.request(Router.getFormElements(businessId: businessId)).responseJSON { response in
@@ -54,14 +65,5 @@ class FQFormsViewController: UIViewController {
             SwiftSpinner.hide();
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
