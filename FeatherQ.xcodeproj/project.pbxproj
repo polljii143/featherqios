@@ -11,9 +11,6 @@
 		8047D21F1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8047D21E1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift */; };
 		8047D2211CC85327006A40FB /* FQHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8047D2201CC85327006A40FB /* FQHistoryTableViewCell.swift */; };
 		8047D2231CC8FED1006A40FB /* FQRemoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8047D2221CC8FED1006A40FB /* FQRemoteViewController.swift */; };
-		8047D2251CCA02C9006A40FB /* Prototype.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8047D2241CCA02C9006A40FB /* Prototype.storyboard */; };
-		808D4C0B1CCC63CE00C913F8 /* FQPrototypeLoaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808D4C0A1CCC63CE00C913F8 /* FQPrototypeLoaderViewController.swift */; };
-		808D4C0D1CCDA5E300C913F8 /* FQPrototypeHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808D4C0C1CCDA5E300C913F8 /* FQPrototypeHomeViewController.swift */; };
 		809D4A231CD71ACD00C317B7 /* FQMoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809D4A221CD71ACD00C317B7 /* FQMoreTableViewController.swift */; };
 		80A058321CA7DC8100789921 /* FQLoaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A058311CA7DC8100789921 /* FQLoaderViewController.swift */; };
 		80B562051CCF931B0082ECED /* FQHomeCurrentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B562041CCF931B0082ECED /* FQHomeCurrentTableViewCell.swift */; };
@@ -63,9 +60,6 @@
 		8047D21E1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQRemoteQueueTableViewCell.swift; sourceTree = "<group>"; };
 		8047D2201CC85327006A40FB /* FQHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		8047D2221CC8FED1006A40FB /* FQRemoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQRemoteViewController.swift; sourceTree = "<group>"; };
-		8047D2241CCA02C9006A40FB /* Prototype.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Prototype.storyboard; sourceTree = "<group>"; };
-		808D4C0A1CCC63CE00C913F8 /* FQPrototypeLoaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQPrototypeLoaderViewController.swift; sourceTree = "<group>"; };
-		808D4C0C1CCDA5E300C913F8 /* FQPrototypeHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQPrototypeHomeViewController.swift; sourceTree = "<group>"; };
 		809D4A221CD71ACD00C317B7 /* FQMoreTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQMoreTableViewController.swift; sourceTree = "<group>"; };
 		80A058311CA7DC8100789921 /* FQLoaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQLoaderViewController.swift; sourceTree = "<group>"; };
 		80B562041CCF931B0082ECED /* FQHomeCurrentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQHomeCurrentTableViewCell.swift; sourceTree = "<group>"; };
@@ -133,15 +127,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		808D4C091CCC639E00C913F8 /* Prototype */ = {
-			isa = PBXGroup;
-			children = (
-				808D4C0A1CCC63CE00C913F8 /* FQPrototypeLoaderViewController.swift */,
-				808D4C0C1CCDA5E300C913F8 /* FQPrototypeHomeViewController.swift */,
-			);
-			name = Prototype;
-			sourceTree = "<group>";
-		};
 		AA3C448957CC7E6A4234B2B2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,7 +162,6 @@
 				E52148A81C50917100C952A4 /* Models */,
 				E52148961C507DF600C952A4 /* AppDelegate.swift */,
 				E52148981C507DF600C952A4 /* ViewController.swift */,
-				8047D2241CCA02C9006A40FB /* Prototype.storyboard */,
 				E521489A1C507DF600C952A4 /* Main.storyboard */,
 				E521489D1C507DF600C952A4 /* Assets.xcassets */,
 				E521489F1C507DF600C952A4 /* LaunchScreen.storyboard */,
@@ -216,7 +200,6 @@
 		E52148AA1C50919800C952A4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				808D4C091CCC639E00C913F8 /* Prototype */,
 				E52148B61C5213D200C952A4 /* Intro */,
 				E592CF3A1C6078EF00FA2492 /* FQProfileViewController.swift */,
 				E592CF401C60835C00FA2492 /* FQAboutViewController.swift */,
@@ -378,7 +361,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				80BCE5581CA9187900512426 /* doorbell_x.wav in Resources */,
-				8047D2251CCA02C9006A40FB /* Prototype.storyboard in Resources */,
 				E52148A11C507DF600C952A4 /* LaunchScreen.storyboard in Resources */,
 				E521489E1C507DF600C952A4 /* Assets.xcassets in Resources */,
 				E521489C1C507DF600C952A4 /* Main.storyboard in Resources */,
@@ -457,7 +439,6 @@
 				E52148971C507DF600C952A4 /* AppDelegate.swift in Sources */,
 				E592CF3E1C607A9B00FA2492 /* FQProfileTableViewCell.swift in Sources */,
 				E592CF3B1C6078EF00FA2492 /* FQProfileViewController.swift in Sources */,
-				808D4C0B1CCC63CE00C913F8 /* FQPrototypeLoaderViewController.swift in Sources */,
 				8047D21F1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift in Sources */,
 				E52C0FEB1C620F9A00B43FD4 /* FQRecentViewController.swift in Sources */,
 				E562C04E1C55127C00D0D3CB /* FQHomeViewController.swift in Sources */,
@@ -477,7 +458,6 @@
 				E592CF4D1C61DAF800FA2492 /* FQBroadcastCollectionViewCell.swift in Sources */,
 				E562C0511C55315200D0D3CB /* FQExploreViewController.swift in Sources */,
 				80DFBB5A1CDC19790032E1F0 /* FQQRCodeScannerViewController.swift in Sources */,
-				808D4C0D1CCDA5E300C913F8 /* FQPrototypeHomeViewController.swift in Sources */,
 				E5F040AC1C63655F00DB0D8E /* Session.swift in Sources */,
 				E592CF2D1C5F597500FA2492 /* FQSideMenuLinks.swift in Sources */,
 				E52148B31C50AAE700C952A4 /* API.swift in Sources */,

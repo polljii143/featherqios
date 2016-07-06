@@ -295,9 +295,9 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if Session.instance.inQueue && indexPath.section == 0 && !self.filterSearch.active {
-            return 275.0
+            return 260.0
         }
-        return 121.0
+        return 105.0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

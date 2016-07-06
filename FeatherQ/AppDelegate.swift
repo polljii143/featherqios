@@ -32,9 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableView.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
         UINavigationBar.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */ // set a universal tint color for all views depending on app motiff
         
-        // Prototype Mode
-        //self.window?.rootViewController = UIStoryboard(name: "Prototype", bundle: nil).instantiateViewControllerWithIdentifier("FQIntroContainerViewController")
-        
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         if FBSDKAccessToken.currentAccessToken() != nil {
             self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FQLoaderViewController")

@@ -10,7 +10,6 @@ import UIKit
 
 class FQRemoteQueueTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var rowCount: UILabel!
     @IBOutlet weak var serviceName: UILabel!
     @IBOutlet weak var getNumLbl: UILabel!
     

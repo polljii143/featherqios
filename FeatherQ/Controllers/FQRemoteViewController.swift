@@ -30,6 +30,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
     var announceNumbers = [String]()
     var announceTerminals = [String]()
     var announceServices = [String]()
+    var announceColors = [String]()
     var serviceNames = [String]()
     var serviceIds = [String]()
     var serviceEnabled = [Bool]()
@@ -91,9 +92,10 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
         
         // Configure the cell
         if !self.announceNumbers.isEmpty {
-            cell.number.text = self.announceNumbers[indexPath.row]
-            cell.terminalName.text = self.announceTerminals[indexPath.row]
-            cell.serviceName.text = self.announceServices[indexPath.row]
+            cell.number.text = self.displayBroadcastInfo(indexPath.row, broadcastInfo: self.announceNumbers)
+            cell.terminalName.text = self.displayBroadcastInfo(indexPath.row, broadcastInfo: self.announceTerminals)
+            cell.serviceName.text = self.displayBroadcastInfo(indexPath.row, broadcastInfo: self.announceServices)
+            cell.backgroundColor = self.displayBoxColor(indexPath.row, broadcastInfo: self.announceColors)
         }
         
         
@@ -101,10 +103,8 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let cellWidth: CGFloat = UIScreen.mainScreen().bounds.width / 2
-        //let cellHeight = self.broadcastNumbers.bounds.height / (CGFloat(self.numBoxes) / 2.0)
-        let cellHeight = self.broadcastNumbers.bounds.height / 5.0
-        return CGSize(width: cellWidth - 2.0, height: cellHeight - 2.0)
+        let cellWidth: CGFloat = (UIScreen.mainScreen().bounds.width / 2) - 2.0
+        return CGSize(width: cellWidth, height: 118.0)
     }
     
     @IBAction func checkInUser(sender: AnyObject) {
@@ -200,6 +200,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
                 self.newNumbers.append(dataObj["box\(count)"]!["number"] as! String)
                 self.announceTerminals.append(dataObj["box\(count)"]!["terminal"] as! String)
                 self.announceServices.append(dataObj["box\(count)"]!["service"] as! String)
+                self.announceColors.append(dataObj["box\(count)"]!["color"] as! String)
             }
             if self.announceNumbers != self.newNumbers {
                 self.audioPlayer.play()
@@ -255,6 +256,39 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
             self.tickerNotes.text = ticker1 + ticker2 + ticker3 + ticker4 + ticker5
             self.getCheckedIn(self.transaction_number)
         }
+    }
+    
+    func displayBroadcastInfo(index: Int, broadcastInfo: [String]) -> String {
+        if broadcastInfo.indices.contains(index) {
+            return broadcastInfo[index]
+        }
+        else {
+            return ""
+        }
+    }
+    
+    func displayBoxColor(index: Int, broadcastInfo: [String]) -> UIColor {
+        let color = self.displayBroadcastInfo(index, broadcastInfo: broadcastInfo);
+        let colors = [
+            "": UIColor(red: 0.9686, green: 0.9686, blue: 0.9686, alpha: 1.0), /* #f7f7f7 */
+            "cyan": UIColor(red: 0.4784, green: 0.7922, blue: 0.6784, alpha: 1.0), /* #7acaad */
+            "yellow": UIColor(red: 0.9765, green: 0.7686, blue: 0.302, alpha: 1.0), /* #f9c44d */
+            "blue": UIColor(red: 0.3647, green: 0.5529, blue: 0.7373, alpha: 1.0), /* #5d8dbc */
+            "borange": UIColor(red: 0.9294, green: 0.549, blue: 0.3608, alpha: 1.0), /* #ed8c5c */
+            "red": UIColor(red: 0.8706, green: 0.4706, blue: 0.4863, alpha: 1.0), /* #de787c */
+            "green": UIColor(red: 0.5373, green: 0.7608, blue: 0.4824, alpha: 1.0), /* #89c27b */
+            "violet": UIColor(red: 0.5333, green: 0.4784, blue: 0.6745, alpha: 1.0), /* #887aac */
+            "ECD078": UIColor(red: 0.9255, green: 0.8157, blue: 0.4706, alpha: 1.0), /* #ecd078 */
+            "D95B43": UIColor(red: 0.851, green: 0.3569, blue: 0.2627, alpha: 1.0), /* #d95b43 */
+            "C02942": UIColor(red: 0.7529, green: 0.1608, blue: 0.2588, alpha: 1.0), /* #c02942 */
+            "x542437": UIColor(red: 0.3294, green: 0.1412, blue: 0.2157, alpha: 1.0), /* #542437 */
+            "x53777A": UIColor(red: 0.3255, green: 0.4667, blue: 0.4784, alpha: 1.0), /* #53777a */
+            "FCA78B": UIColor(red: 0.9882, green: 0.6549, blue: 0.5451, alpha: 1.0), /* #fca78b */
+            "FF745F": UIColor(red: 1, green: 0.4549, blue: 0.3725, alpha: 1.0), /* #ff745f */
+            "x78250A": UIColor(red: 0.4706, green: 0.1451, blue: 0.0392, alpha: 1.0),
+            "x242436": UIColor(red: 0.1412, green: 0.1412, blue: 0.2118, alpha: 1.0)
+        ];
+        return colors[color]!;
     }
 
 }
