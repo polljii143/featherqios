@@ -117,7 +117,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                     last_called_number = last_called["queue_number"] as! String
                     last_called_service = last_called["service_name"] as! String
                 }
-                if self.queueInfo["business_id"] != "\(dataObj["id"]!)" {
+//                if self.queueInfo["business_id"] != "\(dataObj["id"]!)" {
                     self.activeBusiness.append(FQBusiness(modelAttr: [
                         "business_id": "\(dataObj["id"]!)",
                         "name": dataObj["name"] as! String,
@@ -128,7 +128,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                         "last_called_number": last_called_number,
                         "last_called_service": last_called_service
                     ]))
-                }
+//                }
             }
             self.getAllBusiness()
         }
@@ -149,7 +149,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
             debugPrint(responseData)
             for businessData in responseData["search-result"] {
                 let dataObj = businessData.1.dictionaryObject!
-                if self.queueInfo["business_id"] != "\(dataObj["business_id"]!)" {
+//                if self.queueInfo["business_id"] != "\(dataObj["business_id"]!)" {
                     self.otherBusiness.append(FQBusiness(modelAttr: [
                         "business_id": "\(dataObj["business_id"]!)",
                         "name": dataObj["name"] as! String,
@@ -160,7 +160,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                         "last_called_number": " ",
                         "last_called_service": " "
                     ]))
-                }
+//                }
             }
             self.tableView.reloadData()
             SwiftSpinner.hide()
@@ -341,7 +341,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                         cell.checkInLbl.text = "Check-In"
                         cell.checkInLbl.font = UIFont.systemFontOfSize(11)
                         cell.checkInLbl.textColor = UIColor.blackColor()
-                        cell.checkInLbl.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) /* #ffffff */
+                        //cell.checkInLbl.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) /* #ffffff */
                     }
                     return cell
                 }
