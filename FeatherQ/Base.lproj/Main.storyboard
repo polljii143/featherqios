@@ -1313,13 +1313,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myW-da-oNt">
-                                                    <rect key="frame" x="56" y="25.5" width="256" height="20.5"/>
+                                                    <rect key="frame" x="61" y="25.5" width="251" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6NB-Sk-lva">
-                                                    <rect key="frame" x="72" y="58" width="40" height="18"/>
+                                                    <rect key="frame" x="77" y="58" width="40" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="62" id="NCa-Cp-dvM"/>
                                                     </constraints>
@@ -1333,16 +1333,16 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ev-XU-uwu">
-                                                    <rect key="frame" x="56" y="8" width="256" height="16"/>
+                                                    <rect key="frame" x="61" y="8" width="251" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6JU-xM-Sns">
-                                                    <rect key="frame" x="8" y="22" width="40" height="40"/>
+                                                    <rect key="frame" x="8" y="19.5" width="45" height="45"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="b5G-bY-bJ7"/>
-                                                        <constraint firstAttribute="width" constant="40" id="vh6-9U-HhR"/>
+                                                        <constraint firstAttribute="height" constant="45" id="b5G-bY-bJ7"/>
+                                                        <constraint firstAttribute="width" constant="45" id="vh6-9U-HhR"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Eye" translatesAutoresizingMaskIntoConstraints="NO" id="56l-e5-lbp">
@@ -1353,14 +1353,14 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GetNumber" translatesAutoresizingMaskIntoConstraints="NO" id="Vpq-x6-b9j">
-                                                    <rect key="frame" x="54" y="60" width="16" height="16"/>
+                                                    <rect key="frame" x="59" y="60" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="16" id="Qbp-nX-EIc"/>
                                                         <constraint firstAttribute="height" constant="16" id="gji-gY-4kY"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XVJ-Su-xCi">
-                                                    <rect key="frame" x="121.5" y="58" width="40" height="18"/>
+                                                    <rect key="frame" x="126.5" y="58" width="40" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="71" id="3hs-FQ-8y2"/>
                                                     </constraints>
