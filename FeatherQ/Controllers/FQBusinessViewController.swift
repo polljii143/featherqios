@@ -157,6 +157,15 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
             destView.business_id = self.chosenBusiness!.businessId!
             destView.business_name = self.chosenBusiness!.name!
         }
+        else if segue.identifier == "getNumber" {
+            let destView = segue.destinationViewController as! FQGetNumberViewController
+            destView.chosenBusiness = self.chosenBusiness
+            if let selectedCell = sender as? FQRemoteQueueTableViewCell {
+                let indexPath = self.serviceList.indexPathForCell(selectedCell)!
+                destView.serviceId = self.serviceIds[indexPath.row]
+                destView.serviceName = self.serviceNames[indexPath.row]
+            }
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -216,21 +225,21 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in " + self.serviceNames[indexPath.row] + "?", preferredStyle: .Alert)
-        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
-            self.getQueueService(Session.instance.user_id, service_id: self.serviceIds[indexPath.row])
-        }))
-        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
-        self.presentViewController(alertBox, animated: true, completion: nil)
-    }
-    
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        if Session.instance.inQueue || !self.serviceEnabled[indexPath.row] {
-            return nil
-        }
-        return indexPath
-    }
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in " + self.serviceNames[indexPath.row] + "?", preferredStyle: .Alert)
+//        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
+//            self.getQueueService(Session.instance.user_id, service_id: self.serviceIds[indexPath.row])
+//        }))
+//        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
+//        self.presentViewController(alertBox, animated: true, completion: nil)
+//    }
+//    
+//    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+//        if Session.instance.inQueue || !self.serviceEnabled[indexPath.row] {
+//            return nil
+//        }
+//        return indexPath
+//    }
     
     func getQueueService(user_id: String, service_id: String) {
         SwiftSpinner.show("Lining up..")

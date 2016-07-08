@@ -11,6 +11,7 @@
 		8047D21F1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8047D21E1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift */; };
 		8047D2211CC85327006A40FB /* FQHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8047D2201CC85327006A40FB /* FQHistoryTableViewCell.swift */; };
 		8047D2231CC8FED1006A40FB /* FQRemoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8047D2221CC8FED1006A40FB /* FQRemoteViewController.swift */; };
+		805BCE9C1D2F8BC900FD8E7C /* FQGetNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805BCE9B1D2F8BC900FD8E7C /* FQGetNumberViewController.swift */; };
 		809D4A231CD71ACD00C317B7 /* FQMoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809D4A221CD71ACD00C317B7 /* FQMoreTableViewController.swift */; };
 		80A058321CA7DC8100789921 /* FQLoaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A058311CA7DC8100789921 /* FQLoaderViewController.swift */; };
 		80B562051CCF931B0082ECED /* FQHomeCurrentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B562041CCF931B0082ECED /* FQHomeCurrentTableViewCell.swift */; };
@@ -60,6 +61,7 @@
 		8047D21E1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQRemoteQueueTableViewCell.swift; sourceTree = "<group>"; };
 		8047D2201CC85327006A40FB /* FQHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		8047D2221CC8FED1006A40FB /* FQRemoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQRemoteViewController.swift; sourceTree = "<group>"; };
+		805BCE9B1D2F8BC900FD8E7C /* FQGetNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQGetNumberViewController.swift; sourceTree = "<group>"; };
 		809D4A221CD71ACD00C317B7 /* FQMoreTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQMoreTableViewController.swift; sourceTree = "<group>"; };
 		80A058311CA7DC8100789921 /* FQLoaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQLoaderViewController.swift; sourceTree = "<group>"; };
 		80B562041CCF931B0082ECED /* FQHomeCurrentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQHomeCurrentTableViewCell.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				80B562061CD0A2090082ECED /* FQMessageViewController.swift */,
 				809D4A221CD71ACD00C317B7 /* FQMoreTableViewController.swift */,
 				80DFBB591CDC19790032E1F0 /* FQQRCodeScannerViewController.swift */,
+				805BCE9B1D2F8BC900FD8E7C /* FQGetNumberViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				8047D21F1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift in Sources */,
 				E52C0FEB1C620F9A00B43FD4 /* FQRecentViewController.swift in Sources */,
 				E562C04E1C55127C00D0D3CB /* FQHomeViewController.swift in Sources */,
+				805BCE9C1D2F8BC900FD8E7C /* FQGetNumberViewController.swift in Sources */,
 				E592CF4B1C61D80400FA2492 /* FQBusinessViewController.swift in Sources */,
 				80B5620B1CD0B09E0082ECED /* FQInboxTableViewCell.swift in Sources */,
 				E592CF381C6064B500FA2492 /* FQHistoryViewController.swift in Sources */,
