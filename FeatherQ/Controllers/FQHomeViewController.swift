@@ -333,14 +333,14 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                         cell.checkInBtn.enabled = false
                         cell.checkInLbl.font = UIFont.boldSystemFontOfSize(13)
                         cell.checkInLbl.text = "You are now checked in."
-                        cell.checkInLbl.textColor = UIColor.whiteColor()
+//                        cell.checkInLbl.textColor = UIColor.whiteColor()
                         cell.checkInLbl.backgroundColor = UIColor(red: 0, green: 0.7294, blue: 0.5451, alpha: 1.0) /* #00ba8b */
                     }
                     else {
                         cell.checkInBtn.enabled = true
                         cell.checkInLbl.text = "Check-In"
-                        cell.checkInLbl.font = UIFont.systemFontOfSize(11)
-                        cell.checkInLbl.textColor = UIColor.blackColor()
+//                        cell.checkInLbl.font = UIFont.systemFontOfSize(11)
+//                        cell.checkInLbl.textColor = UIColor.blackColor()
                         //cell.checkInLbl.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) /* #ffffff */
                     }
                     return cell
