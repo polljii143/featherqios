@@ -216,21 +216,21 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in " + self.serviceNames[indexPath.row] + "?", preferredStyle: .Alert)
-        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
-            self.getQueueService(Session.instance.user_id, service_id: self.serviceIds[indexPath.row])
-        }))
-        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
-        self.presentViewController(alertBox, animated: true, completion: nil)
-    }
-    
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        if Session.instance.inQueue || !self.serviceEnabled[indexPath.row] {
-            return nil
-        }
-        return indexPath
-    }
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in " + self.serviceNames[indexPath.row] + "?", preferredStyle: .Alert)
+//        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
+//            self.getQueueService(Session.instance.user_id, service_id: self.serviceIds[indexPath.row])
+//        }))
+//        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
+//        self.presentViewController(alertBox, animated: true, completion: nil)
+//    }
+//    
+//    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+//        if Session.instance.inQueue || !self.serviceEnabled[indexPath.row] {
+//            return nil
+//        }
+//        return indexPath
+//    }
     
     func getQueueService(user_id: String, service_id: String) {
         SwiftSpinner.show("Lining up..")
