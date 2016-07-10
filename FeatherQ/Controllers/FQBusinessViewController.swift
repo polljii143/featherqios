@@ -241,23 +241,23 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
 //        return indexPath
 //    }
     
-    func getQueueService(user_id: String, service_id: String) {
-        SwiftSpinner.show("Lining up..")
-        Alamofire.request(Router.getQueueService(user_id: user_id, service_id: service_id)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            Session.instance.inQueue = true
-            self.navigationController?.popViewControllerAnimated(true)
-        }
-    }
+//    func getQueueService(user_id: String, service_id: String) {
+//        SwiftSpinner.show("Lining up..")
+//        Alamofire.request(Router.getQueueService(user_id: user_id, service_id: service_id)).responseJSON { response in
+//            if response.result.isFailure {
+//                debugPrint(response.result.error)
+//                let errorMessage = (response.result.error?.localizedDescription)! as String
+//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                    SwiftSpinner.hide()
+//                })
+//                return
+//            }
+//            let responseData = JSON(data: response.data!)
+//            debugPrint(responseData)
+//            Session.instance.inQueue = true
+//            self.navigationController?.popViewControllerAnimated(true)
+//        }
+//    }
     
     func displayBroadcastInfo(index: Int, broadcastInfo: [String]) -> String {
         if broadcastInfo.indices.contains(index) {

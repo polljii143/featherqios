@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import SwiftSpinner
 
 class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -40,6 +43,10 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
         return 1
     }
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "FORMS"
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FQFormListTableViewCell", forIndexPath: indexPath)
         cell.textLabel?.text = "Shipping Details"
@@ -55,5 +62,32 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func getNumber(sender: AnyObject) {
+        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in this service?", preferredStyle: .Alert)
+        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
+            self.getQueueService(Session.instance.user_id, service_id: self.serviceId!)
+        }))
+        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
+        self.presentViewController(alertBox, animated: true, completion: nil)
+    }
+    
+    func getQueueService(user_id: String, service_id: String) {
+        SwiftSpinner.show("Lining up..")
+        Alamofire.request(Router.getQueueService(user_id: user_id, service_id: service_id)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            Session.instance.inQueue = true
+            self.performSegueWithIdentifier("afterGetNum", sender: self)
+        }
+    }
 
 }

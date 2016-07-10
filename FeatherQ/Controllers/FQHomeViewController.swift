@@ -295,9 +295,9 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if Session.instance.inQueue && indexPath.section == 0 && !self.filterSearch.active {
-            return 260.0
+            return 200.0
         }
-        return 105.0
+        return 97.0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -333,8 +333,8 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                         cell.checkInBtn.enabled = false
                         cell.checkInLbl.font = UIFont.boldSystemFontOfSize(13)
                         cell.checkInLbl.text = "You are now checked in."
-//                        cell.checkInLbl.textColor = UIColor.whiteColor()
-                        cell.checkInLbl.backgroundColor = UIColor(red: 0, green: 0.7294, blue: 0.5451, alpha: 1.0) /* #00ba8b */
+                        cell.checkInLbl.textColor = UIColor.whiteColor()
+                        cell.checkInLbl.backgroundColor = UIColor(red: 0, green: 0.5098, blue: 0, alpha: 1.0) /* #008200 */
                     }
                     else {
                         cell.checkInBtn.enabled = true

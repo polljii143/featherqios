@@ -16,6 +16,9 @@ class FQRemoteQueueTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.getNumLbl.layer.cornerRadius = 5.0
+        self.getNumLbl.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
