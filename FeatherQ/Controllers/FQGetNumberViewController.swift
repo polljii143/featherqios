@@ -16,6 +16,7 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
     var chosenBusiness: FQBusiness?
     var serviceId: String?
     var serviceName: String?
+    var formData = [[String:String]]()
 
     @IBOutlet weak var serviceNameLbl: UILabel!
     @IBOutlet weak var formList: UITableView!
@@ -26,6 +27,10 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
         // Do any additional setup after loading the view.
         self.navigationItem.title = self.chosenBusiness?.name
         self.serviceNameLbl.text = self.serviceName
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.getDisplayForms(self.serviceId!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,7 +45,7 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return self.formData.count
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -49,7 +54,9 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FQFormListTableViewCell", forIndexPath: indexPath)
-        cell.textLabel?.text = "Shipping Details"
+        
+        cell.textLabel?.text = self.formData[indexPath.row]["formName"]
+        
         return cell
     }
     
@@ -87,6 +94,32 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
             debugPrint(responseData)
             Session.instance.inQueue = true
             self.performSegueWithIdentifier("afterGetNum", sender: self)
+        }
+    }
+    
+    func getDisplayForms(serviceId: String) {
+        SwiftSpinner.show("Loading forms..")
+        self.formData.removeAll()
+        Alamofire.request(Router.getDisplayForms(serviceId: serviceId)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            for formList in responseData["forms"] {
+                let dataObj = formList.1.dictionaryObject!
+                self.formData.append([
+                    "formName" : dataObj["form_name"] as! String,
+                    "formId": "\(dataObj["id"])"
+                ])
+            }
+            self.formList.reloadData()
+            SwiftSpinner.hide()
         }
     }
 

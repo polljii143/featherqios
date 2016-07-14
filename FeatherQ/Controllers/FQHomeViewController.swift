@@ -326,7 +326,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                         cell.businessAddress.text = self.queueInfo["business_address"]
                         cell.nowServing.text = self.queueInfo["last_called_service"]!
                         cell.currentNum.text = self.queueInfo["last_called_number"]!
-                        cell.timeLeft.text = self.queueInfo["estimated_time_left"]! + " mins left"
+//                        cell.timeLeft.text = self.queueInfo["estimated_time_left"]! + "mins left"
                         cell.yourNumber.text = self.queueInfo["priority_number"]
                     }
                     if Session.instance.checkedIn {

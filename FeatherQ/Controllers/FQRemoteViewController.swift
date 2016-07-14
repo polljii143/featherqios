@@ -246,8 +246,8 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
             let dataObj = responseData.dictionaryObject!
             self.priorityNumber.text = dataObj["user_priority_number"] as? String
             self.serviceName.text = dataObj["service_name"] as? String
-            self.peopleAhead.text = "\(dataObj["number_people_ahead"]!)"
-            self.timeLeft.text = "\(dataObj["estimated_time_left"]!)"
+//            self.peopleAhead.text = "\(dataObj["number_people_ahead"]!)"
+//            self.timeLeft.text = "\(dataObj["estimated_time_left"]!)"
             let ticker1 = (dataObj["ticker_message"] as! String) + " "
             let ticker2 = (dataObj["ticker_message2"] as! String) + " "
             let ticker3 = (dataObj["ticker_message3"] as! String) + " "

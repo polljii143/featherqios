@@ -12,7 +12,8 @@ import SwiftyJSON
 import Locksmith
 
 enum Router: URLRequestConvertible{
-    static let baseURL = "http://four.featherq.com"
+//    static let baseURL = "http://four.featherq.com"
+    static let baseURL = "http://new-featherq.local"
     //static let clientId = "fqiosapp" //use in OAuth
     //static let clientSecret = "fqiosapp" //use in OAuth
     
@@ -51,6 +52,8 @@ enum Router: URLRequestConvertible{
     case getUserQueue(user_id: String)
     case postSendMessage(user_id: String, business_id: String, message: String)
     case getBusinessBroadcast(business_id: String, user_id: String)
+    case getViewForm(form_id: String)
+    case getDisplayForms(serviceId: String)
     
     var method: Alamofire.Method {
         switch self {
@@ -137,6 +140,10 @@ enum Router: URLRequestConvertible{
             return "/mobile/send-message"
         case .getBusinessBroadcast(let business_id, let user_id):
             return "/mobile/business-broadcast/" + business_id + "/" + user_id
+        case .getViewForm(let form_id):
+            return "/mobile/view-form/" + form_id
+        case .getDisplayForms(let serviceId):
+            return "/mobile/display-forms/" + serviceId
         default:
             return "/"
         }
