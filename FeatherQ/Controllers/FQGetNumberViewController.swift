@@ -60,15 +60,20 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "formFillup" {
+            let selectedCell = sender as? UITableViewCell
+            let indexPath = self.formList.indexPathForCell(selectedCell!)!
+            let destView = segue.destinationViewController as! FQFormTableViewController
+            destView.formName = self.formData[indexPath.row]["formName"]
+            destView.formId = self.formData[indexPath.row]["formId"]
+        }
     }
-    */
     
     @IBAction func getNumber(sender: AnyObject) {
         let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in this service?", preferredStyle: .Alert)
@@ -115,7 +120,7 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
                 let dataObj = formList.1.dictionaryObject!
                 self.formData.append([
                     "formName" : dataObj["form_name"] as! String,
-                    "formId": "\(dataObj["id"])"
+                    "formId": "\(dataObj["form_id"]!)"
                 ])
             }
             self.formList.reloadData()
