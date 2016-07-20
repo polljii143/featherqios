@@ -1013,10 +1013,10 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="History Details" id="tho-pI-clX">
-                        <barButtonItem key="backBarButtonItem" title=" " id="iSO-Cs-37s"/>
+                        <barButtonItem key="backBarButtonItem" title="History" id="As7-TU-hxc"/>
                         <barButtonItem key="rightBarButtonItem" title="Forms" id="qR3-fO-7lC">
                             <connections>
-                                <segue destination="YYe-E7-NWF" kind="show" identifier="viewFormRecords" id="0Zu-uc-JVV"/>
+                                <segue destination="YYe-E7-NWF" kind="show" identifier="" id="0Zu-uc-JVV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1063,6 +1063,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="ug5-oA-Bfq" kind="show" id="6xF-NA-L4b"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1070,11 +1073,42 @@
                             <outlet property="delegate" destination="YYe-E7-NWF" id="NIz-fi-56h"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="TjB-tG-nOV"/>
+                    <navigationItem key="navigationItem" title="Title" id="TjB-tG-nOV">
+                        <barButtonItem key="backBarButtonItem" title=" " id="Z0v-v6-hb4"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W92-Yg-46t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1225" y="4212"/>
+            <point key="canvasLocation" x="1225" y="4283"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="U3c-ZH-i3u">
+            <objects>
+                <tableViewController id="ug5-oA-Bfq" customClass="FQUserRecordTableViewController" customModule="FeatherQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="BiP-qD-wWf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="khB-Gl-32y">
+                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="khB-Gl-32y" id="1ej-ql-xUp">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ug5-oA-Bfq" id="kum-Ty-gFA"/>
+                            <outlet property="delegate" destination="ug5-oA-Bfq" id="VkA-gr-xk8"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Title" id="jaE-St-hnB"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9ab-Mm-wQ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1225" y="5149"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="qbq-5Y-dAa">
@@ -1526,7 +1560,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G0P-8t-EK6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2684" y="4283"/>
+            <point key="canvasLocation" x="2692" y="4283"/>
         </scene>
         <!--Profile-->
         <scene sceneID="LxW-Yz-eFe">
@@ -1641,7 +1675,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PBU-zw-6zX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3699" y="4283"/>
+            <point key="canvasLocation" x="3707" y="4283"/>
         </scene>
         <!--Categories-->
         <scene sceneID="2hU-A0-hVy">
@@ -2083,7 +2117,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zF8-yH-v36" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3195" y="4283"/>
+            <point key="canvasLocation" x="3203" y="4283"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NOn-gD-3AI">
@@ -2102,7 +2136,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Faq-cq-Fxq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2208" y="4283"/>
+            <point key="canvasLocation" x="2216" y="4283"/>
         </scene>
         <!--FeatherQ.com-->
         <scene sceneID="QxB-e5-Bq2">

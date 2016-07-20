@@ -1,23 +1,14 @@
 //
-//  FQUserFormsTableViewController.swift
+//  FQUserRecordTableViewController.swift
 //  FeatherQ
 //
-//  Created by Paul Andrew Gutib on 7/19/16.
+//  Created by Paul Andrew Gutib on 7/20/16.
 //  Copyright © 2016 Paul Andrew Gutib. All rights reserved.
 //
 
 import UIKit
-import Alamofire
-import SwiftSpinner
-import SwiftyJSON
 
-class FQUserFormsTableViewController: UITableViewController {
-    
-    var chosenBusiness: FQBusiness?
-    var serviceId: String?
-    var serviceName: String?
-    var formData = [[String:String]]()
-    var transactionNumber = "123456789"
+class FQUserRecordTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,35 +18,34 @@ class FQUserFormsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        self.navigationItem.title = self.serviceName
     }
 
-    override func viewWillAppear(animated: Bool) {
-        self.getUserRecords(self.transactionNumber)
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
+    // MARK: - Table view data source
+
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 0
     }
-    
+
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.formData.count
+        return 0
     }
-    
+
+    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("FQFormListTableViewCell", forIndexPath: indexPath)
-        
-        cell.textLabel?.text = self.formData[indexPath.row]["form_name"]
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+
+        // Configure the cell...
+
         return cell
     }
+    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -92,43 +82,14 @@ class FQUserFormsTableViewController: UITableViewController {
     }
     */
 
+    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-//        let destView = segue.destinationViewController as! FQRecentViewController
-//        if let selectedCell = sender as? FQHistoryTableViewCell {
-//            let indexPath = self.businessList.indexPathForCell(selectedCell)!
-//            destView.transaction_number = self.recentBusiness[indexPath.row].transaction_number!
-//        }
     }
-    
-    func getUserRecords(transactionNumber: String) {
-        SwiftSpinner.show("Searching records..")
-        self.formData.removeAll()
-        Alamofire.request(Router.getUserRecords(transactionNumber: transactionNumber)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            for record in responseData {
-                let dataObj = record.1.dictionaryObject!
-                self.formData.append([
-                    "record_id": "\(dataObj["record_id"]!)",
-                    "form_name": dataObj["form_name"] as! String
-                ])
-            }
-            self.tableView.reloadData()
-            SwiftSpinner.hide()
-        }
-    }
+    */
 
 }

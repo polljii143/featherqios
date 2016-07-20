@@ -119,9 +119,9 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "viewFormRecords" {
-            
-        }
+        let destView = segue.destinationViewController as! FQUserFormsTableViewController
+        destView.serviceId = self.serviceId
+        destView.serviceName = self.serviceName.text
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
