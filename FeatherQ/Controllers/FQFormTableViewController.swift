@@ -13,7 +13,7 @@ import SwiftyJSON
 
 class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    let pickerData = [["Regular", "Express", "VIP", "Regular", "Express", "VIP", "Regular", "Express", "VIP"]]
+    var pickerData = [[String]]()
     var formName: String?
     var formId: String?
     var fieldData = [[String:String]]()
@@ -148,6 +148,8 @@ class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UI
     
     func getViewForm(formId: String) {
         SwiftSpinner.show("Rendering form..")
+        self.pickerData.removeAll()
+        self.fieldData.removeAll()
         Alamofire.request(Router.getViewForm(form_id: formId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
@@ -166,8 +168,7 @@ class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UI
                     "field_type" : dataObj["field_type"] as! String,
                     "label": dataObj["field_data"]!["label"] as! String,
                     "value_a": fieldDataArr["value_a"]!,
-                    "value_b": fieldDataArr["value_b"]!,
-                    "options": fieldDataArr["options"]!,
+                    "value_b": fieldDataArr["value_b"]!
                 ])
             }
             debugPrint(self.fieldData)
@@ -182,23 +183,17 @@ class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UI
         if fieldType == "radio" {
             arr["value_a"] = dataObj["field_data"]!["value_a"] as? String
             arr["value_b"] = dataObj["field_data"]!["value_b"] as? String
-            arr["options"] = ""
         }
         else if fieldType == "dropdown" {
             let options = dataObj["field_data"]!["options"] as! [String:AnyObject]
             let optionArray = Array(options.keys)
-            var optionVal = ""
-            for index in 0 ..< optionArray.count {
-                optionVal += optionArray[index] + "|"
-            }
+            self.pickerData.append(optionArray)
             arr["value_a"] = ""
             arr["value_b"] = ""
-            arr["options"] = optionVal
         }
         else {
             arr["value_a"] = ""
             arr["value_b"] = ""
-            arr["options"] = ""
         }
         return arr
     }

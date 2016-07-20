@@ -17,9 +17,13 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
     var serviceId: String?
     var serviceName: String?
     var formData = [[String:String]]()
+    var timerCounter: NSTimer?
 
     @IBOutlet weak var serviceNameLbl: UILabel!
     @IBOutlet weak var formList: UITableView!
+    @IBOutlet weak var availableNumber: UILabel!
+    @IBOutlet weak var estimatedCallTime: UILabel!
+    @IBOutlet weak var peopleInLine: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +34,15 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.getDisplayForms(self.serviceId!)
+        SwiftSpinner.show("Getting estimates..")
+        self.getServiceEstimates(self.serviceId!, closure: {
+            self.getDisplayForms(self.serviceId!)
+        })
+        self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(FQGetNumberViewController.timerCallbacks), userInfo: nil, repeats: true)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        self.timerCounter!.invalidate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -102,6 +114,28 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    func getServiceEstimates(serviceId: String, closure: () -> Void) {
+        Alamofire.request(Router.getServiceEstimates(serviceId: serviceId)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            let dataObj = responseData.dictionaryObject!
+            self.availableNumber.text = "\(dataObj["next_number"]!)"
+            let upperLimit = dataObj["upper_limit"] as! String
+            let lowerLimit = dataObj["lower_limit"] as! String
+            self.estimatedCallTime.text = lowerLimit + " ~ " + upperLimit
+            self.peopleInLine.text = "\(dataObj["numbers_ahead"]!)"
+            closure()
+        }
+    }
+    
     func getDisplayForms(serviceId: String) {
         SwiftSpinner.show("Loading forms..")
         self.formData.removeAll()
@@ -126,6 +160,10 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
             self.formList.reloadData()
             SwiftSpinner.hide()
         }
+    }
+    
+    func timerCallbacks() {
+        self.getServiceEstimates(self.serviceId!, closure: {})
     }
 
 }

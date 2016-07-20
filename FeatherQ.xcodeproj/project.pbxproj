@@ -21,6 +21,7 @@
 		80BCE5581CA9187900512426 /* doorbell_x.wav in Resources */ = {isa = PBXBuildFile; fileRef = 80BCE5571CA9187900512426 /* doorbell_x.wav */; };
 		80BCE55A1CA95D2900512426 /* FQTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BCE5591CA95D2900512426 /* FQTransaction.swift */; };
 		80DFBB5A1CDC19790032E1F0 /* FQQRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFBB591CDC19790032E1F0 /* FQQRCodeScannerViewController.swift */; };
+		80F414681D3E34F400B2E100 /* FQUserFormsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F414671D3E34F400B2E100 /* FQUserFormsTableViewController.swift */; };
 		A5A31B7B4682E3EB73700E90 /* Pods_FeatherQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB9F36575FDD7FB1F385F006 /* Pods_FeatherQ.framework */; };
 		E52148971C507DF600C952A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52148961C507DF600C952A4 /* AppDelegate.swift */; };
 		E52148991C507DF600C952A4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52148981C507DF600C952A4 /* ViewController.swift */; };
@@ -72,6 +73,7 @@
 		80BCE5571CA9187900512426 /* doorbell_x.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = doorbell_x.wav; sourceTree = "<group>"; };
 		80BCE5591CA95D2900512426 /* FQTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQTransaction.swift; sourceTree = "<group>"; };
 		80DFBB591CDC19790032E1F0 /* FQQRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQQRCodeScannerViewController.swift; sourceTree = "<group>"; };
+		80F414671D3E34F400B2E100 /* FQUserFormsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQUserFormsTableViewController.swift; sourceTree = "<group>"; };
 		829D5A59E0FA0DB8EB02AD60 /* Pods-FeatherQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatherQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ.release.xcconfig"; sourceTree = "<group>"; };
 		CB9F36575FDD7FB1F385F006 /* Pods_FeatherQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FeatherQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E52148931C507DF600C952A4 /* FeatherQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeatherQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +131,46 @@
 				829D5A59E0FA0DB8EB02AD60 /* Pods-FeatherQ.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		80F414691D3E353900B2E100 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				E592CF371C6064B500FA2492 /* FQHistoryViewController.swift */,
+				E52C0FEA1C620F9A00B43FD4 /* FQRecentViewController.swift */,
+				80F414671D3E34F400B2E100 /* FQUserFormsTableViewController.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		80F4146A1D3E36CC00B2E100 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				E592CF3A1C6078EF00FA2492 /* FQProfileViewController.swift */,
+				E592CF401C60835C00FA2492 /* FQAboutViewController.swift */,
+				809D4A221CD71ACD00C317B7 /* FQMoreTableViewController.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		80F4146B1D3E36E300B2E100 /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				E562C0431C547E9C00D0D3CB /* FQSearchViewController.swift */,
+				E592CF4A1C61D80400FA2492 /* FQBusinessViewController.swift */,
+				8047D2221CC8FED1006A40FB /* FQRemoteViewController.swift */,
+				805BCE9B1D2F8BC900FD8E7C /* FQGetNumberViewController.swift */,
+			);
+			path = Business;
+			sourceTree = "<group>";
+		};
+		80F4146C1D3E371300B2E100 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				E562C0591C56046700D0D3CB /* FQCategoriesViewController.swift */,
+				E562C0501C55315200D0D3CB /* FQExploreViewController.swift */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		AA3C448957CC7E6A4234B2B2 /* Frameworks */ = {
@@ -204,24 +246,17 @@
 		E52148AA1C50919800C952A4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				80F4146C1D3E371300B2E100 /* Categories */,
+				80F4146B1D3E36E300B2E100 /* Business */,
+				80F4146A1D3E36CC00B2E100 /* About */,
+				80F414691D3E353900B2E100 /* History */,
 				E52148B61C5213D200C952A4 /* Intro */,
-				E592CF3A1C6078EF00FA2492 /* FQProfileViewController.swift */,
-				E592CF401C60835C00FA2492 /* FQAboutViewController.swift */,
-				E592CF371C6064B500FA2492 /* FQHistoryViewController.swift */,
 				E592CF321C5F647900FA2492 /* FQLoginViewController.swift */,
-				E562C0591C56046700D0D3CB /* FQCategoriesViewController.swift */,
-				E562C0501C55315200D0D3CB /* FQExploreViewController.swift */,
 				E562C04D1C55127C00D0D3CB /* FQHomeViewController.swift */,
-				E562C0431C547E9C00D0D3CB /* FQSearchViewController.swift */,
 				E52148B01C50A9A500C952A4 /* FQTestViewController.swift */,
-				E592CF4A1C61D80400FA2492 /* FQBusinessViewController.swift */,
-				E52C0FEA1C620F9A00B43FD4 /* FQRecentViewController.swift */,
 				80A058311CA7DC8100789921 /* FQLoaderViewController.swift */,
-				8047D2221CC8FED1006A40FB /* FQRemoteViewController.swift */,
 				80B562061CD0A2090082ECED /* FQMessageViewController.swift */,
-				809D4A221CD71ACD00C317B7 /* FQMoreTableViewController.swift */,
 				80DFBB591CDC19790032E1F0 /* FQQRCodeScannerViewController.swift */,
-				805BCE9B1D2F8BC900FD8E7C /* FQGetNumberViewController.swift */,
 				805BCE9D1D3098F200FD8E7C /* FQFormTableViewController.swift */,
 			);
 			path = Controllers;
@@ -445,6 +480,7 @@
 				E592CF311C5F5EA800FA2492 /* FQSideMenuFullName.swift in Sources */,
 				E52148971C507DF600C952A4 /* AppDelegate.swift in Sources */,
 				E592CF3E1C607A9B00FA2492 /* FQProfileTableViewCell.swift in Sources */,
+				80F414681D3E34F400B2E100 /* FQUserFormsTableViewController.swift in Sources */,
 				E592CF3B1C6078EF00FA2492 /* FQProfileViewController.swift in Sources */,
 				8047D21F1CC76B10006A40FB /* FQRemoteQueueTableViewCell.swift in Sources */,
 				E52C0FEB1C620F9A00B43FD4 /* FQRecentViewController.swift in Sources */,

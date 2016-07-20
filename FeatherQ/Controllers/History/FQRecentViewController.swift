@@ -22,8 +22,8 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var ratingBtn3: UIButton!
     @IBOutlet weak var ratingBtn4: UIButton!
     @IBOutlet weak var ratingBtn5: UIButton!
-    @IBOutlet weak var fullDate: UILabel!
     @IBOutlet weak var queueStatus: UILabel!
+    @IBOutlet weak var serviceName: UILabel!
     
     var ratingValue = "0"
     var name = " "
@@ -35,6 +35,7 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
     var transaction_number = "0"
     var transaction_date = "0"
     var businessId = "0"
+    var serviceId = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +76,8 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
             self.ratingValue = "\(dataObj["rating"]!)"
             self.transaction_date = "\(dataObj["transaction_date"]!)"
             self.businessId = "\(dataObj["business_id"]!)"
+            self.serviceName.text = dataObj["service_name"] as? String
+            self.serviceId = "\(dataObj["service_id"]!)"
             self.renderHistoryData()
             SwiftSpinner.hide()
         }
@@ -83,11 +86,11 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
     func renderHistoryData() {
         self.ratedButtonsChange(self.ratingValue)
         
-        let dateFormatter = NSDateFormatter()
-        let stringDate = self.transaction_date
-        let transactionDate = NSDate(timeIntervalSince1970: Double(stringDate)!)
-        dateFormatter.dateStyle = .LongStyle
-        self.fullDate.text = dateFormatter.stringFromDate(transactionDate)
+//        let dateFormatter = NSDateFormatter()
+//        let stringDate = self.transaction_date
+//        let transactionDate = NSDate(timeIntervalSince1970: Double(stringDate)!)
+//        dateFormatter.dateStyle = .LongStyle
+//        self.fullDate.text = dateFormatter.stringFromDate(transactionDate)
         
         var queueStatus = self.businessStatus
         if queueStatus == "1" {
@@ -110,16 +113,16 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "viewFormRecords" {
+            
+        }
     }
-    */
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
