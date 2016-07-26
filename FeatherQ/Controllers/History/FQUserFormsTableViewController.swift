@@ -98,11 +98,12 @@ class FQUserFormsTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-//        let destView = segue.destinationViewController as! FQRecentViewController
-//        if let selectedCell = sender as? FQHistoryTableViewCell {
-//            let indexPath = self.businessList.indexPathForCell(selectedCell)!
-//            destView.transaction_number = self.recentBusiness[indexPath.row].transaction_number!
-//        }
+        let destView = segue.destinationViewController as! FQUserRecordTableViewController
+        if let selectedCell = sender as? UITableViewCell {
+            let indexPath = self.tableView.indexPathForCell(selectedCell)!
+            destView.formName = self.formData[indexPath.row]["form_name"]
+            destView.recordId = self.formData[indexPath.row]["record_id"]
+        }
     }
     
     func getUserRecords(transactionNumber: String) {

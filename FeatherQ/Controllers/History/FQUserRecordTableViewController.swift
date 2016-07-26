@@ -7,8 +7,16 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import SwiftSpinner
 
 class FQUserRecordTableViewController: UITableViewController {
+    
+    var formName: String?
+    var recordId: String?
+    var formLabels = [String]()
+    var formFieldData = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,34 +26,39 @@ class FQUserRecordTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.title = self.formName!
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.getViewRecord(self.recordId!)
+    }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return self.formLabels.count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("FQUserRecordTableViewCell", forIndexPath: indexPath)
 
         // Configure the cell...
+        cell.textLabel?.text = self.formFieldData[indexPath.row]
+        cell.detailTextLabel?.text = self.formLabels[indexPath.row]
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -91,5 +104,32 @@ class FQUserRecordTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func getViewRecord(recordId: String) {
+        SwiftSpinner.show("Loading info..")
+        Alamofire.request(Router.getViewRecord(recordId: recordId)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            for formFields in responseData["fields"] {
+                let dataObj = formFields.1.dictionaryObject!
+                let fieldName = dataObj["field_data"]!["label"] as! String
+                self.formLabels.append(fieldName)
+            }
+            for labelVal in self.formLabels {
+                let labelKey = labelVal.stringByReplacingOccurrencesOfString(" ", withString: "").lowercaseString
+                let fieldVal = responseData["form_data"]["form_data"][labelKey].stringValue
+                self.formFieldData.append(fieldVal)
+            }
+            self.tableView.reloadData()
+            SwiftSpinner.hide()
+        }
+    }
 
 }
