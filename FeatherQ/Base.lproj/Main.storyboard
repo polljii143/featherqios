@@ -2166,7 +2166,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rOc-TP-iSS">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rOc-TP-iSS">
                                 <rect key="frame" x="0.0" y="64" width="320" height="147"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kup-fO-Rrr">
@@ -2255,7 +2255,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTn-bh-edq">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RTn-bh-edq">
                                 <rect key="frame" x="0.0" y="487" width="320" height="32"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dadhasjkdhsakjdhadkjshadshksadjsad" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="caP-rY-nql" customClass="MarqueeLabel">
@@ -2291,7 +2291,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HMc-Rx-cBH">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HMc-Rx-cBH">
                                 <rect key="frame" x="0.0" y="243" width="320" height="244"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="Orj-2T-0GY">
                                     <size key="itemSize" width="153" height="118"/>
@@ -2408,7 +2408,7 @@
                                     <outlet property="delegate" destination="4JW-LO-QMF" id="cd2-h1-wrm"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c92-rK-uGo">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c92-rK-uGo">
                                 <rect key="frame" x="0.0" y="211" width="320" height="32"/>
                                 <color key="backgroundColor" red="0.71764705880000002" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -3099,6 +3099,7 @@
                     <navigationItem key="navigationItem" title="Title" id="uIB-EV-d8y">
                         <barButtonItem key="backBarButtonItem" title=" " id="Ybq-N9-F59"/>
                     </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="availableNumber" destination="HcW-1d-DmF" id="3kC-xl-qGr"/>
                         <outlet property="estimatedCallTime" destination="yhc-Mb-pXj" id="qAy-rH-kIe"/>
@@ -3138,7 +3139,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="XXXX" id="yKt-MH-8Z2">
                         <barButtonItem key="backBarButtonItem" title=" " id="U8I-cr-S9i"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="uqy-XP-Dcx"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="j2T-yJ-vey">
                             <connections>
                                 <action selector="saveForm:" destination="jYF-wV-ix7" id="ILB-qH-8o5"/>
@@ -3179,7 +3179,7 @@
         <image name="WhiteLogo" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QFN-xh-9p1"/>
+        <segue reference="Ikm-jY-Gi2"/>
         <segue reference="Vni-D6-TNW"/>
         <segue reference="jre-Eb-9v4"/>
     </inferredMetricsTieBreakers>

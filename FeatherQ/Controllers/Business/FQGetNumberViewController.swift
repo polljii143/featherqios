@@ -84,10 +84,12 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
             let destView = segue.destinationViewController as! FQFormTableViewController
             destView.formName = self.formData[indexPath.row]["formName"]
             destView.formId = self.formData[indexPath.row]["formId"]
+            destView.formIndex = indexPath.row
         }
     }
     
     @IBAction func getNumber(sender: AnyObject) {
+        debugPrint(Session.instance.serviceFormData)
         let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in this service?", preferredStyle: .Alert)
         alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
             self.getQueueService(Session.instance.user_id, service_id: self.serviceId!)

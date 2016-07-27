@@ -21,6 +21,7 @@ class Session {
     var user_id = ""
     var inQueue = false
     var checkedIn = false
+    var serviceFormData = [[String:[[String:String]]]]()
     
     init(){
         

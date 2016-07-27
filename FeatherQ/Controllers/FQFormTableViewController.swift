@@ -17,6 +17,11 @@ class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UI
     var formName: String?
     var formId: String?
     var fieldData = [[String:String]]()
+    var tagsFieldType = [String]()
+    var formSubmit = [[String:String]]()
+    var formIndex: Int?
+    
+    let TAG_UNIQUE = 21 // add this num to make tags unique
 
     @IBOutlet weak var pickerView: UIPickerView!
     
@@ -70,16 +75,16 @@ class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UI
 
         // Configure the cell...
         if self.fieldData[indexPath.row]["field_type"] == "radio" {
-            cell.addSubview(self.renderRadioButton(self.fieldData[indexPath.row]))
+            cell.addSubview(self.renderRadioButton(self.fieldData[indexPath.row], viewTag: indexPath.row))
         }
         else if self.fieldData[indexPath.row]["field_type"] == "textfield" {
-            cell.addSubview(self.renderTextField(self.fieldData[indexPath.row]))
+            cell.addSubview(self.renderTextField(self.fieldData[indexPath.row], viewTag: indexPath.row))
         }
         else if self.fieldData[indexPath.row]["field_type"] == "checkbox" {
-            cell.addSubview(self.renderCheckbox(self.fieldData[indexPath.row]))
+            cell.addSubview(self.renderCheckbox(self.fieldData[indexPath.row], viewTag: indexPath.row))
         }
         else if self.fieldData[indexPath.row]["field_type"] == "dropdown" {
-            cell.addSubview(self.renderDropdown(self.fieldData[indexPath.row]))
+            cell.addSubview(self.renderDropdown(self.fieldData[indexPath.row], viewTag: indexPath.row))
         }
 
         return cell
@@ -132,18 +137,58 @@ class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UI
         return self.pickerData[component][row]
     }
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+//    // In a storyboard-based application, you will often want to do a little preparation before navigation
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        // Get the new view controller using segue.destinationViewController.
+//        // Pass the selected object to the new view controller.
+//        let destView = segue.destinationViewController as! FQGetNumberViewController
+//        destView.serviceFormsSubmit.append(self.serviceForm)
+//        destView.serviceId = self.persistServiceId!
+//        debugPrint(self.serviceForm)
+//    }
 
     @IBAction func saveForm(sender: AnyObject) {
+        self.formSubmit.removeAll()
+        for i in 0 ..< self.tagsFieldType.count {
+            self.formSubmit.append([
+                "xml_tag": self.fieldData[i]["label"]!.stringByReplacingOccurrencesOfString(" ", withString: "").lowercaseString,
+                "xml_val": self.getFormFieldValues(i)
+            ])
+        }
+        self.appendOrReplaceFormData(self.formIndex!)
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func appendOrReplaceFormData(index: Int) {
+        let arrVal = [self.formId! : self.formSubmit]
+        if Session.instance.serviceFormData.indices.contains(index) {
+            Session.instance.serviceFormData[index] = arrVal
+        }
+        else {
+            Session.instance.serviceFormData.append(arrVal)
+        }
+    }
+    
+    func getFormFieldValues(i: Int) -> String {
+        if self.tagsFieldType[i] == "textfield" {
+            let textField = self.view.viewWithTag(i + TAG_UNIQUE) as! UITextField
+            return textField.text!
+        }
+        else if self.tagsFieldType[i] == "radio" {
+            let radio = self.view.viewWithTag(i + TAG_UNIQUE) as! UISegmentedControl
+            return radio.titleForSegmentAtIndex(radio.selectedSegmentIndex)!
+        }
+        else if self.tagsFieldType[i] == "checkbox" {
+            let checkbox = self.view.viewWithTag(i + TAG_UNIQUE) as! UISwitch
+            if checkbox.on {
+                return "\(1)"
+            }
+            return "\(0)"
+        }
+        let dropdown = self.view.viewWithTag(i + TAG_UNIQUE) as! UIPickerView
+        return self.pickerData[0][dropdown.selectedRowInComponent(0)]
     }
     
     func getViewForm(formId: String) {
@@ -198,7 +243,7 @@ class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UI
         return arr
     }
     
-    func renderRadioButton(fieldData: [String:String]) -> UIView {
+    func renderRadioButton(fieldData: [String:String], viewTag: Int) -> UIView {
         let viewWrapper = UIView(frame: CGRect(x: 8.0, y: 4.0, width: UIScreen.mainScreen().bounds.width - 30.0, height: self.view.bounds.height))
         let radioLbl = UILabel(frame: CGRect(x: 8.0, y: 4.0, width: viewWrapper.bounds.width, height: 21.0))
         radioLbl.text = fieldData["label"]
@@ -207,33 +252,39 @@ class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UI
         let radioBtn = UISegmentedControl(frame: CGRect(x: 8.0, y: 33.0, width: viewWrapper.bounds.width, height: 29.0))
         radioBtn.insertSegmentWithTitle(fieldData["value_a"], atIndex: 0, animated: false)
         radioBtn.insertSegmentWithTitle(fieldData["value_b"], atIndex: 1, animated: false)
+        radioBtn.tag = viewTag + TAG_UNIQUE
+        self.tagsFieldType.append("radio")
         viewWrapper.addSubview(radioLbl)
         viewWrapper.addSubview(radioBtn)
         return viewWrapper
     }
     
-    func renderTextField(fieldData: [String:String]) -> UIView {
+    func renderTextField(fieldData: [String:String], viewTag: Int) -> UIView {
         let viewWrapper = UIView(frame: CGRect(x: 8.0, y: 4.0, width: UIScreen.mainScreen().bounds.width - 30.0, height: self.view.bounds.height))
         let textField = UITextField(frame: CGRect(x: 8.0, y: 4.0, width: viewWrapper.bounds.width, height: 30.0))
         textField.placeholder = fieldData["label"]
         textField.font = UIFont.systemFontOfSize(17.0)
+        textField.tag = viewTag + TAG_UNIQUE
+        self.tagsFieldType.append("textfield")
         viewWrapper.addSubview(textField)
         return viewWrapper
     }
     
-    func renderCheckbox(fieldData: [String:String]) -> UIView {
+    func renderCheckbox(fieldData: [String:String], viewTag: Int) -> UIView {
         let viewWrapper = UIView(frame: CGRect(x: 8.0, y: 4.0, width: UIScreen.mainScreen().bounds.width - 30.0, height: self.view.bounds.height))
         let checkLbl = UILabel(frame: CGRect(x: 8.0, y: 7.0, width: viewWrapper.bounds.width - 55.0, height: 21.0))
         checkLbl.text = fieldData["label"]
         checkLbl.textColor = UIColor.darkGrayColor()
         checkLbl.font = UIFont.systemFontOfSize(17.0)
         let checkBox = UISwitch(frame: CGRect(x: viewWrapper.bounds.width - 51.0, y: 3.0, width: 51.0, height: 31.0))
+        checkBox.tag = viewTag + TAG_UNIQUE
+        self.tagsFieldType.append("checkbox")
         viewWrapper.addSubview(checkLbl)
         viewWrapper.addSubview(checkBox)
         return viewWrapper
     }
     
-    func renderDropdown(fieldData: [String:String]) -> UIView {
+    func renderDropdown(fieldData: [String:String], viewTag: Int) -> UIView {
         let viewWrapper = UIView(frame: CGRect(x: 8.0, y: 4.0, width: UIScreen.mainScreen().bounds.width - 30.0, height: self.view.bounds.height))
         let dropdownLbl = UILabel(frame: CGRect(x: 8.0, y: 4.0, width: viewWrapper.bounds.width, height: 21.0))
         dropdownLbl.text = fieldData["label"]
@@ -242,6 +293,8 @@ class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UI
         let dropdownPicker = UIPickerView(frame: CGRect(x: 8.0, y: 25.0, width: viewWrapper.bounds.width, height: 100.0))
         dropdownPicker.delegate = self
         dropdownPicker.dataSource = self
+        dropdownPicker.tag = viewTag + TAG_UNIQUE
+        self.tagsFieldType.append("dropdown")
         viewWrapper.addSubview(dropdownLbl)
         viewWrapper.addSubview(dropdownPicker)
         return viewWrapper
