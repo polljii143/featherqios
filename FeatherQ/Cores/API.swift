@@ -57,6 +57,7 @@ enum Router: URLRequestConvertible{
     case getServiceEstimates(serviceId: String)
     case getUserRecords(transactionNumber: String)
     case getViewRecord(recordId: String)
+    case postSubmitForm(userId: String, transactionNumber: String, formSubmissions: [[String:[[String:String]]]], serviceId: String, serviceName: String)
     
     var method: Alamofire.Method {
         switch self {
@@ -67,6 +68,8 @@ enum Router: URLRequestConvertible{
         case .postFacebookLogin:
             return .POST
         case .postSendMessage:
+            return .POST
+        case .postSubmitForm:
             return .POST
         default:
             return .GET
@@ -153,6 +156,8 @@ enum Router: URLRequestConvertible{
             return "/mobile/user-records/" + transactionNumber
         case .getViewRecord(let recordId):
             return "/mobile/view-record/" + recordId
+        case .postSubmitForm:
+            return "/mobile/submit-form"
         default:
             return "/"
         }
@@ -212,6 +217,15 @@ enum Router: URLRequestConvertible{
                 "message": message
             ]
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
+        case .postSubmitForm(let userId, let transactionNumber, let formSubmissions, let serviceId, let serviceName):
+            let params = [
+                "user_id": userId,
+                "transaction_number": transactionNumber,
+                "form_submissions": formSubmissions,
+                "service_id": serviceId,
+                "service_name": serviceName
+            ]
+            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: params as? [String : AnyObject]).0
         default:
             return mutableURLRequest
         }

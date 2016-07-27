@@ -38,11 +38,11 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
         self.getServiceEstimates(self.serviceId!, closure: {
             self.getDisplayForms(self.serviceId!)
         })
-        self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(FQGetNumberViewController.timerCallbacks), userInfo: nil, repeats: true)
+//        self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(FQGetNumberViewController.timerCallbacks), userInfo: nil, repeats: true)
     }
     
     override func viewDidDisappear(animated: Bool) {
-        self.timerCounter!.invalidate()
+//        self.timerCounter!.invalidate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -90,12 +90,29 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func getNumber(sender: AnyObject) {
         debugPrint(Session.instance.serviceFormData)
-        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in this service?", preferredStyle: .Alert)
-        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
-            self.getQueueService(Session.instance.user_id, service_id: self.serviceId!)
-        }))
-        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
-        self.presentViewController(alertBox, animated: true, completion: nil)
+        self.postSubmitForm(Session.instance.user_id, transactionNumber: "123123", formSubmissions: Session.instance.serviceFormData, serviceId: self.serviceId!, serviceName: self.serviceName!)
+//        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in this service?", preferredStyle: .Alert)
+//        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
+//            self.getQueueService(Session.instance.user_id, service_id: self.serviceId!)
+//        }))
+//        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
+//        self.presentViewController(alertBox, animated: true, completion: nil)
+    }
+    
+    func postSubmitForm(userId: String, transactionNumber: String, formSubmissions: [[String:[[String:String]]]], serviceId: String, serviceName: String) {
+        SwiftSpinner.show("Lining up..")
+        Alamofire.request(Router.postSubmitForm(userId: userId, transactionNumber: transactionNumber, formSubmissions: formSubmissions, serviceId: serviceId, serviceName: serviceName)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+        }
     }
     
     func getQueueService(user_id: String, service_id: String) {
