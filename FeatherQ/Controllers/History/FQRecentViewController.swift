@@ -122,6 +122,7 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
         let destView = segue.destinationViewController as! FQUserFormsTableViewController
         destView.serviceId = self.serviceId
         destView.serviceName = self.serviceName.text
+        destView.transactionNumber = self.transaction_number
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

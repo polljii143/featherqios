@@ -17,7 +17,7 @@ class FQUserFormsTableViewController: UITableViewController {
     var serviceId: String?
     var serviceName: String?
     var formData = [[String:String]]()
-    var transactionNumber = "123456789"
+    var transactionNumber: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,7 @@ class FQUserFormsTableViewController: UITableViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
-        self.getUserRecords(self.transactionNumber)
+        self.getUserRecords(self.transactionNumber!)
     }
     
     override func didReceiveMemoryWarning() {
@@ -109,7 +109,7 @@ class FQUserFormsTableViewController: UITableViewController {
     func getUserRecords(transactionNumber: String) {
         SwiftSpinner.show("Searching records..")
         self.formData.removeAll()
-        Alamofire.request(Router.getUserRecords(transactionNumber: transactionNumber)).responseJSON { response in
+        Alamofire.request(Router.getUserRecords(transactionNumber: self.transactionNumber!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
                 let errorMessage = (response.result.error?.localizedDescription)! as String

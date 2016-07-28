@@ -18,6 +18,7 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
     var serviceName: String?
     var formData = [[String:String]]()
     var timerCounter: NSTimer?
+    var transactionNumber: String?
 
     @IBOutlet weak var serviceNameLbl: UILabel!
     @IBOutlet weak var formList: UITableView!
@@ -38,11 +39,11 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
         self.getServiceEstimates(self.serviceId!, closure: {
             self.getDisplayForms(self.serviceId!)
         })
-//        self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(FQGetNumberViewController.timerCallbacks), userInfo: nil, repeats: true)
+        self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(FQGetNumberViewController.timerCallbacks), userInfo: nil, repeats: true)
     }
     
     override func viewDidDisappear(animated: Bool) {
-//        self.timerCounter!.invalidate()
+        self.timerCounter!.invalidate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -90,17 +91,18 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func getNumber(sender: AnyObject) {
         debugPrint(Session.instance.serviceFormData)
-        self.postSubmitForm(Session.instance.user_id, transactionNumber: "123123", formSubmissions: Session.instance.serviceFormData, serviceId: self.serviceId!, serviceName: self.serviceName!)
-//        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in this service?", preferredStyle: .Alert)
-//        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
-//            self.getQueueService(Session.instance.user_id, service_id: self.serviceId!)
-//        }))
-//        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
-//        self.presentViewController(alertBox, animated: true, completion: nil)
+        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in this service?", preferredStyle: .Alert)
+        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
+            self.getQueueService(Session.instance.user_id, service_id: self.serviceId!, closure: {
+              self.postSubmitForm(Session.instance.user_id, transactionNumber: self.transactionNumber!, formSubmissions: Session.instance.serviceFormData, serviceId: self.serviceId!, serviceName: self.serviceName!)
+            })
+        }))
+        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
+        self.presentViewController(alertBox, animated: true, completion: nil)
     }
     
     func postSubmitForm(userId: String, transactionNumber: String, formSubmissions: [[String:[[String:String]]]], serviceId: String, serviceName: String) {
-        SwiftSpinner.show("Lining up..")
+        SwiftSpinner.show("Submitting form..")
         Alamofire.request(Router.postSubmitForm(userId: userId, transactionNumber: transactionNumber, formSubmissions: formSubmissions, serviceId: serviceId, serviceName: serviceName)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
@@ -112,10 +114,11 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
+            self.performSegueWithIdentifier("afterGetNum", sender: self)
         }
     }
     
-    func getQueueService(user_id: String, service_id: String) {
+    func getQueueService(user_id: String, service_id: String, closure: () -> Void) {
         SwiftSpinner.show("Lining up..")
         Alamofire.request(Router.getQueueService(user_id: user_id, service_id: service_id)).responseJSON { response in
             if response.result.isFailure {
@@ -128,8 +131,9 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
+            self.transactionNumber = responseData["transaction_number"].stringValue
             Session.instance.inQueue = true
-            self.performSegueWithIdentifier("afterGetNum", sender: self)
+            closure()
         }
     }
     
