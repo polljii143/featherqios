@@ -625,7 +625,7 @@
 			baseConfigurationReference = 0A2B78E666E0FA19AFC074C0 /* Pods-FeatherQ.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Paul Andrew Gutib (9TZTEZ38U7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Paul Andrew Gutib (9TZTEZ38U7)";
 				INFOPLIST_FILE = FeatherQ/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -641,7 +641,7 @@
 			baseConfigurationReference = 829D5A59E0FA0DB8EB02AD60 /* Pods-FeatherQ.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Paul Andrew Gutib (9TZTEZ38U7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Paul Andrew Gutib (9TZTEZ38U7)";
 				INFOPLIST_FILE = FeatherQ/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

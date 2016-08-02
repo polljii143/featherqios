@@ -11,6 +11,7 @@ import FBSDKCoreKit
 import Alamofire
 import SwiftyJSON
 import SwiftSpinner
+import Locksmith
 
 class FQLoaderViewController: UIViewController {
 
@@ -25,7 +26,7 @@ class FQLoaderViewController: UIViewController {
             let fbId: String = (result.objectForKey("id") as? String)!
             let fbGender: String = (result.objectForKey("gender") as? String)!
             
-            Alamofire.request(Router.postFacebookLogin(fb_id: fbId)).responseJSON { response in
+            Alamofire.request(Router.postFacebookLogin(fb_id: fbId, fb_token: FBSDKAccessToken.currentAccessToken().tokenString)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -35,6 +36,7 @@ class FQLoaderViewController: UIViewController {
                     return
                 }
                 let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
                 let dataObj = responseData["user"].dictionaryObject!
                 Session.instance.fb_id = fbId
                 Session.instance.firstName = fbFirstName
@@ -44,6 +46,11 @@ class FQLoaderViewController: UIViewController {
                 Session.instance.address = dataObj["local_address"] as! String
                 Session.instance.phone = dataObj["phone"] as! String
                 Session.instance.user_id = "\(dataObj["user_id"]!)"
+                do{
+                    try Locksmith.updateData(["access_token": responseData["access_token"].stringValue], forUserAccount: "fqiosapp")
+                }catch {
+                    debugPrint(error)
+                }
                 self.view.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FQTabBarViewController")
             }
         }

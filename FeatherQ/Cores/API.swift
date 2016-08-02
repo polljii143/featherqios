@@ -37,7 +37,7 @@ enum Router: URLRequestConvertible{
     case getRateBusiness(rating: String, facebookId: String, businessId: String, transactionNumber: String)
     case getTransactionRatingInfo(transactionNumber: String)
     case getIndustries
-    case postFacebookLogin(fb_id: String)
+    case postFacebookLogin(fb_id: String, fb_token: String)
     case getBusinessServiceDetails(facebookId: String)
     case getQueueNumber(serviceId: String, name: String, phone: String, email: String)
     case getAllMessages(facebookId: String)
@@ -171,19 +171,20 @@ enum Router: URLRequestConvertible{
         
         debugPrint(mutableURLRequest.URLString)
         
-        /*
         switch self{
-        case .getUserInfo:
+        case .postRegisterUser:
+            break
+        case .postFacebookLogin:
             break
         default:
             let dictionary = Locksmith.loadDataForUserAccount("fqiosapp")
             if dictionary != nil {
                 let token = dictionary!["access_token"] as! String
                 debugPrint(token)
-                //mutableURLRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") // will implement this once we have OAuth
+                mutableURLRequest.setValue("\(token)", forHTTPHeaderField: "Authorization")
             }
             break
-        }*/
+        }
         
         switch self {
         case .postSendtoBusiness(let facebookId, let businessId, let message, let phone):
@@ -205,9 +206,10 @@ enum Router: URLRequestConvertible{
                 "country": ""
             ]
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
-        case .postFacebookLogin(let fb_id):
+        case .postFacebookLogin(let fb_id, let fb_token):
             let params = [
-                "facebook_id": fb_id
+                "facebook_id": fb_id,
+                "fb_token": fb_token
             ]
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
         case .postSendMessage(let user_id, let business_id, let message):

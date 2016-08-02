@@ -51,6 +51,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                 return
             }
             let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
             let dataObj = responseData.dictionaryObject!
             if dataObj.isEmpty {
                 Session.instance.inQueue = false

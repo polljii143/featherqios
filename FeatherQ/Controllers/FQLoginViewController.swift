@@ -12,6 +12,7 @@ import FBSDKLoginKit
 import SwiftyJSON
 import SwiftSpinner
 import Alamofire
+import Locksmith
 
 class FQLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 
@@ -40,6 +41,7 @@ class FQLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         SwiftSpinner.show("Verifying..")
         FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"id, first_name, last_name, email, gender"]).startWithCompletionHandler { (connection, result, error) -> Void in
             if result != nil {
+                debugPrint(result)
                 let fbFirstName = (result.objectForKey("first_name") as? String)!
                 let fbLastName: String = (result.objectForKey("last_name") as? String)!
                 let fbEmail: String = (result.objectForKey("email") as? String)!
@@ -58,7 +60,7 @@ class FQLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                     let responseData = JSON(data: response.data!)
                     debugPrint(responseData)
                     
-                    Alamofire.request(Router.postFacebookLogin(fb_id: fbId)).responseJSON { response in
+                    Alamofire.request(Router.postFacebookLogin(fb_id: fbId, fb_token: FBSDKAccessToken.currentAccessToken().tokenString)).responseJSON { response in
                         if response.result.isFailure {
                             debugPrint(response.result.error)
                             let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -68,6 +70,7 @@ class FQLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                             return
                         }
                         let responseData = JSON(data: response.data!)
+                        debugPrint(responseData)
                         let dataObj = responseData["user"].dictionaryObject!
                         Session.instance.fb_id = fbId
                         Session.instance.firstName = fbFirstName
@@ -77,6 +80,11 @@ class FQLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                         Session.instance.address = dataObj["local_address"] as! String
                         Session.instance.phone = dataObj["phone"] as! String
                         Session.instance.user_id = "\(dataObj["user_id"]!)"
+                        do{
+                            try Locksmith.updateData(["access_token": responseData["access_token"].stringValue], forUserAccount: "fqiosapp")
+                        }catch {
+                            debugPrint(error)
+                        }
                         SwiftSpinner.hide({
                             self.view.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FQTabBarViewController")
                         })
