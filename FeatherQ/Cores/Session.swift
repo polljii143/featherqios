@@ -22,6 +22,7 @@ class Session {
     var inQueue = false
     var checkedIn = false
     var serviceFormData = [[String:[[String:String]]]]()
+    var deviceToken = ""
     
     init(){
         

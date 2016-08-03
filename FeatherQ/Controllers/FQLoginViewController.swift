@@ -48,7 +48,7 @@ class FQLoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 let fbId: String = (result.objectForKey("id") as? String)!
                 let fbGender: String = (result.objectForKey("gender") as? String)!
                 
-                Alamofire.request(Router.postRegisterUser(fb_id: fbId, first_name: fbFirstName, last_name: fbLastName, email: fbEmail, gender: fbGender)).responseJSON { response in
+                Alamofire.request(Router.postRegisterUser(fb_id: fbId, first_name: fbFirstName, last_name: fbLastName, email: fbEmail, gender: fbGender, deviceToken: Session.instance.deviceToken)).responseJSON { response in
                     if response.result.isFailure {
                         debugPrint(response.result.error)
                         let errorMessage = (response.result.error?.localizedDescription)! as String

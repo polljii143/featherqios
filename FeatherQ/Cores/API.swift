@@ -26,7 +26,7 @@ enum Router: URLRequestConvertible{
     case getBusinessDetail(id: String)
     case getActiveBusiness
     case getShowNumber(businessId: String)
-    case postRegisterUser(fb_id: String, first_name: String, last_name: String, email: String, gender: String)
+    case postRegisterUser(fb_id: String, first_name: String, last_name: String, email: String, gender: String, deviceToken: String)
     case getUpdateContactCountry
     case getUserIndustryInfo(facebookId: String, limit: String)
     case getQueueInfo(facebookId: String, businessId: String)
@@ -195,7 +195,7 @@ enum Router: URLRequestConvertible{
                 "phone": phone
             ]
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
-        case .postRegisterUser(let fb_id, let first_name, let last_name, let email, let gender):
+        case .postRegisterUser(let fb_id, let first_name, let last_name, let email, let gender, let deviceToken):
             let params = [
                 "fb_id": fb_id,
                 "first_name": first_name,
@@ -203,7 +203,9 @@ enum Router: URLRequestConvertible{
                 "email": email,
                 "gender": gender,
                 "phone": "",
-                "country": ""
+                "country": "",
+                "device_token": deviceToken,
+                "device_type": "iOS"
             ]
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
         case .postFacebookLogin(let fb_id, let fb_token):

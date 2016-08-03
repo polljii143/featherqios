@@ -20,10 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
-        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
-        application.registerUserNotificationSettings(pushNotificationSettings)
-        application.registerForRemoteNotifications()
+        self.registerForPushNotifications(application)
         
         IQKeyboardManager.sharedManager().enable = true
         
@@ -68,16 +65,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loginManager.logOut()
     }
     
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print(userInfo)
+    }
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != .None {
+            application.registerForRemoteNotifications()
+        }
+    }
+    
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        print("DEVICE TOKEN = \(deviceToken)")
+        print("Device Token (raw): \(deviceToken)")
+        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+        var tokenString = ""
+        for i in 0..<deviceToken.length {
+            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+        }
+        print("Device Token (string):", tokenString)
+        Session.instance.deviceToken = tokenString
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        print(error)
+        print("Failed to register:", error)
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        print(userInfo)
+    func registerForPushNotifications(application: UIApplication) {
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
+        application.registerUserNotificationSettings(notificationSettings)
     }
 
 }
