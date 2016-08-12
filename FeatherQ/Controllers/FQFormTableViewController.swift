@@ -253,6 +253,7 @@ class FQFormTableViewController: UITableViewController, UIPickerViewDelegate, UI
         radioBtn.insertSegmentWithTitle(fieldData["value_a"], atIndex: 0, animated: false)
         radioBtn.insertSegmentWithTitle(fieldData["value_b"], atIndex: 1, animated: false)
         radioBtn.tag = viewTag + TAG_UNIQUE
+        radioBtn.selectedSegmentIndex = 0
         self.tagsFieldType.append("radio")
         viewWrapper.addSubview(radioLbl)
         viewWrapper.addSubview(radioBtn)

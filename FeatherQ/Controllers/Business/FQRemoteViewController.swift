@@ -32,7 +32,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
     var announceServices = [String]()
     var announceColors = [String]()
     var serviceNames = [String]()
-    var serviceIds = [String]()
+    var queuedServiceId = ""
     var serviceEnabled = [Bool]()
     var timerCounter: NSTimer?
     var audioPlayer = AVAudioPlayer()
@@ -116,23 +116,6 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
         self.presentViewController(alertBox, animated: true, completion: nil)
     }
     
-    func getQueueService(user_id: String, service_id: String) {
-        SwiftSpinner.show("Lining up..")
-        Alamofire.request(Router.getQueueService(user_id: user_id, service_id: service_id)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            SwiftSpinner.hide();
-        }
-    }
-    
     func getCheckedIn(transaction_number: String) {
         Alamofire.request(Router.getCheckedIn(transaction_number: transaction_number)).responseJSON { response in
             if response.result.isFailure {
@@ -196,12 +179,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
             let numBoxes = (dataObj["display"] as! String).componentsSeparatedByString("-")
             let display = numBoxes[1]
             self.numBoxes = Int(display)!
-            for count in 1...self.numBoxes {
-                self.newNumbers.append(dataObj["box\(count)"]!["number"] as! String)
-                self.announceTerminals.append(dataObj["box\(count)"]!["terminal"] as! String)
-                self.announceServices.append(dataObj["box\(count)"]!["service"] as! String)
-                self.announceColors.append(dataObj["box\(count)"]!["color"] as! String)
-            }
+            self.showBroadcastNumbersByService(dataObj)
             if self.announceNumbers != self.newNumbers {
                 self.audioPlayer.play()
             }
@@ -246,6 +224,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
             let dataObj = responseData.dictionaryObject!
             self.priorityNumber.text = dataObj["user_priority_number"] as? String
             self.serviceName.text = dataObj["service_name"] as? String
+            self.queuedServiceId = "\(dataObj["service_id"]!)"
 //            self.peopleAhead.text = "\(dataObj["number_people_ahead"]!)"
 //            self.timeLeft.text = "\(dataObj["estimated_time_left"]!)"
             let ticker1 = (dataObj["ticker_message"] as! String) + " "
@@ -289,6 +268,25 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
             "x242436": UIColor(red: 0.1412, green: 0.1412, blue: 0.2118, alpha: 1.0)
         ];
         return colors[color]!;
+    }
+    
+    func showBroadcastNumbersByService(dataObj: [String:AnyObject]) {
+        if self.queuedServiceId == "" {
+            for count in 1...self.numBoxes {
+                self.newNumbers.append(dataObj["box\(count)"]!["number"] as! String)
+                self.announceTerminals.append(dataObj["box\(count)"]!["terminal"] as! String)
+                self.announceServices.append(dataObj["box\(count)"]!["service"] as! String)
+                self.announceColors.append(dataObj["box\(count)"]!["color"] as! String)
+            }
+        }
+        else {
+            for count in 1...self.numBoxes {
+                self.newNumbers.append(dataObj[self.queuedServiceId]!["box\(count)"]!!["number"] as! String)
+                self.announceTerminals.append(dataObj[self.queuedServiceId]!["box\(count)"]!!["terminal"] as! String)
+                self.announceServices.append(dataObj[self.queuedServiceId]!["box\(count)"]!!["service"] as! String)
+                self.announceColors.append(dataObj[self.queuedServiceId]!["box\(count)"]!!["color"] as! String)
+            }
+        }
     }
 
 }

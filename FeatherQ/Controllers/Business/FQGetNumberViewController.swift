@@ -91,14 +91,21 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func getNumber(sender: AnyObject) {
         debugPrint(Session.instance.serviceFormData)
-        let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in this service?", preferredStyle: .Alert)
-        alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
-            self.getQueueService(Session.instance.user_id, service_id: self.serviceId!, closure: {
-              self.postSubmitForm(Session.instance.user_id, transactionNumber: self.transactionNumber!, formSubmissions: Session.instance.serviceFormData, serviceId: self.serviceId!, serviceName: self.serviceName!)
-            })
-        }))
-        alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
-        self.presentViewController(alertBox, animated: true, completion: nil)
+        if Session.instance.serviceFormData.count < self.formData.count {
+            let alertBox = UIAlertController(title: "NOT ALLOWED", message: "You must fill up the forms before getting the number.", preferredStyle: .Alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertBox, animated: true, completion: nil)
+        }
+        else {
+            let alertBox = UIAlertController(title: "Confirm", message: "Do you want to line up in this service?", preferredStyle: .Alert)
+            alertBox.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action: UIAlertAction!) in
+                self.getQueueService(Session.instance.user_id, service_id: self.serviceId!, closure: {
+                  self.postSubmitForm(Session.instance.user_id, transactionNumber: self.transactionNumber!, formSubmissions: Session.instance.serviceFormData, serviceId: self.serviceId!, serviceName: self.serviceName!)
+                })
+            }))
+            alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
+            self.presentViewController(alertBox, animated: true, completion: nil)
+        }
     }
     
     func postSubmitForm(userId: String, transactionNumber: String, formSubmissions: [[String:[[String:String]]]], serviceId: String, serviceName: String) {

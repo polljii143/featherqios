@@ -17,6 +17,7 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var broadcastNumbers: UICollectionView!
     @IBOutlet weak var serviceList: UITableView!
     @IBOutlet weak var tickerNotes: UILabel!
+    @IBOutlet weak var serviceFilter: UISegmentedControl!
     
     var chosenBusiness: FQBusiness?
     var numBoxes = 0
@@ -31,6 +32,7 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
     var timerCounter: NSTimer?
     var audioPlayer = AVAudioPlayer()
     let dingSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("doorbell_x", ofType: "wav")!)
+    var showServiceId = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,89 +63,7 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         self.readyDingSound()
         self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(FQBusinessViewController.timerCallbacks), userInfo: nil, repeats: true)
         self.getBusinessNumbers(self.chosenBusiness!.businessId!, user_id: Session.instance.user_id)
-    }
-    
-    func timerCallbacks() {
-        self.getBroadcastNumbers(self.chosenBusiness!.businessId!)
-    }
-    
-    func readyDingSound() {
-        do{
-            self.audioPlayer = try AVAudioPlayer(contentsOfURL: self.dingSound, fileTypeHint: nil)
-            self.audioPlayer.prepareToPlay()
-        }catch {
-            print("Error getting the audio file")
-        }
-    }
-    
-    func getBusinessNumbers(business_id: String, user_id: String) {
-        SwiftSpinner.show("Fetching..")
-        self.serviceNames.removeAll()
-        self.serviceIds.removeAll()
-        self.serviceEnabled.removeAll()
-        Alamofire.request(Router.getBusinessNumbers(business_id: business_id, user_id: user_id)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            for serviceList in responseData["service_list"] {
-                let dataObj = serviceList.1.dictionaryObject!
-                self.serviceNames.append(dataObj["service_name"] as! String)
-                self.serviceIds.append("\(dataObj["service_id"]!)")
-                self.serviceEnabled.append(dataObj["enabled"] as! Bool)
-            }
-            self.serviceList.reloadData()
-            SwiftSpinner.hide()
-        }
-    }
-    
-    func getBroadcastNumbers(business_id: String) {
-        self.newNumbers.removeAll()
-        self.announceTerminals.removeAll()
-        self.announceServices.removeAll()
-        self.announceColors.removeAll()
-        let baseUrl = NSURL(string: Router.baseURL)!
-        let appendUrl = NSURL(string: "/json/" + business_id + ".json?nocache=\(NSDate().timeIntervalSince1970)", relativeToURL:baseUrl)!
-        let requestUrl = NSMutableURLRequest(URL: appendUrl)
-        Alamofire.request(requestUrl).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            let dataObj = responseData.dictionaryObject!
-            let numBoxes = (dataObj["display"] as! String).componentsSeparatedByString("-")
-            let display = numBoxes[1]
-            self.numBoxes = Int(display)!
-            for count in 1...self.numBoxes {
-                self.newNumbers.append(dataObj["box\(count)"]!["number"] as! String)
-                self.announceTerminals.append(dataObj["box\(count)"]!["terminal"] as! String)
-                self.announceServices.append(dataObj["box\(count)"]!["service"] as! String)
-                self.announceColors.append(dataObj["box\(count)"]!["color"] as! String)
-            }
-            if self.announceNumbers != self.newNumbers {
-                self.audioPlayer.play()
-            }
-            self.announceNumbers = self.newNumbers
-            let ticker1 = (dataObj["ticker_message"] as! String) + " "
-            let ticker2 = (dataObj["ticker_message2"] as! String) + " "
-            let ticker3 = (dataObj["ticker_message3"] as! String) + " "
-            let ticker4 = (dataObj["ticker_message4"] as! String) + " "
-            let ticker5 = (dataObj["ticker_message5"] as! String) + " "
-            self.tickerNotes.text = ticker1 + ticker2 + ticker3 + ticker4 + ticker5
-            self.broadcastNumbers.reloadData()
-        }
+        Session.instance.serviceFormData.removeAll()
     }
     
     // MARK: - Navigation
@@ -259,6 +179,103 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
 //        }
 //    }
     
+    @IBAction func showServiceBroadcast(sender: AnyObject) {
+        if sender.selectedSegmentIndex == 0 {
+            self.showServiceId = ""
+        }
+        else {
+            self.showServiceId = self.serviceIds[sender.selectedSegmentIndex-1]
+        }
+    }
+    
+    func timerCallbacks() {
+        self.getBroadcastNumbers(self.chosenBusiness!.businessId!)
+    }
+    
+    func readyDingSound() {
+        do{
+            self.audioPlayer = try AVAudioPlayer(contentsOfURL: self.dingSound, fileTypeHint: nil)
+            self.audioPlayer.prepareToPlay()
+        }catch {
+            print("Error getting the audio file")
+        }
+    }
+    
+    func getBusinessNumbers(business_id: String, user_id: String) {
+        SwiftSpinner.show("Fetching..")
+        self.serviceNames.removeAll()
+        self.serviceIds.removeAll()
+        self.serviceEnabled.removeAll()
+        Alamofire.request(Router.getBusinessNumbers(business_id: business_id, user_id: user_id)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            for serviceList in responseData["service_list"] {
+                let dataObj = serviceList.1.dictionaryObject!
+                self.serviceNames.append(dataObj["service_name"] as! String)
+                self.serviceIds.append("\(dataObj["service_id"]!)")
+                self.serviceEnabled.append(dataObj["enabled"] as! Bool)
+            }
+            self.initializeServiceFilters()
+            self.serviceList.reloadData()
+            SwiftSpinner.hide()
+        }
+    }
+    
+    func initializeServiceFilters() {
+        self.serviceFilter.removeAllSegments()
+        self.serviceFilter.insertSegmentWithTitle("All", atIndex: 0, animated: false)
+        self.serviceFilter.selectedSegmentIndex = 0
+        for i in 0 ..< self.serviceNames.count {
+            self.serviceFilter.insertSegmentWithTitle(self.serviceNames[i], atIndex: i+1, animated: false)
+        }
+    }
+    
+    func getBroadcastNumbers(business_id: String) {
+        self.newNumbers.removeAll()
+        self.announceTerminals.removeAll()
+        self.announceServices.removeAll()
+        self.announceColors.removeAll()
+        let baseUrl = NSURL(string: Router.baseURL)!
+        let appendUrl = NSURL(string: "/json/" + business_id + ".json?nocache=\(NSDate().timeIntervalSince1970)", relativeToURL:baseUrl)!
+        let requestUrl = NSMutableURLRequest(URL: appendUrl)
+        Alamofire.request(requestUrl).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            let dataObj = responseData.dictionaryObject!
+            let numBoxes = (dataObj["display"] as! String).componentsSeparatedByString("-")
+            let display = numBoxes[1]
+            self.numBoxes = Int(display)!
+            self.showBroadcastNumbersByService(dataObj)
+            if self.announceNumbers != self.newNumbers {
+                self.audioPlayer.play()
+            }
+            self.announceNumbers = self.newNumbers
+            let ticker1 = (dataObj["ticker_message"] as! String) + " "
+            let ticker2 = (dataObj["ticker_message2"] as! String) + " "
+            let ticker3 = (dataObj["ticker_message3"] as! String) + " "
+            let ticker4 = (dataObj["ticker_message4"] as! String) + " "
+            let ticker5 = (dataObj["ticker_message5"] as! String) + " "
+            self.tickerNotes.text = ticker1 + ticker2 + ticker3 + ticker4 + ticker5
+            self.broadcastNumbers.reloadData()
+        }
+    }
+    
     func displayBroadcastInfo(index: Int, broadcastInfo: [String]) -> String {
         if broadcastInfo.indices.contains(index) {
             return broadcastInfo[index]
@@ -290,6 +307,25 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
             "x242436": UIColor(red: 0.1412, green: 0.1412, blue: 0.2118, alpha: 1.0)
         ];
         return colors[color]!;
+    }
+    
+    func showBroadcastNumbersByService(dataObj: [String:AnyObject]) {
+        if self.showServiceId == "" {
+            for count in 1...self.numBoxes {
+                self.newNumbers.append(dataObj["box\(count)"]!["number"] as! String)
+                self.announceTerminals.append(dataObj["box\(count)"]!["terminal"] as! String)
+                self.announceServices.append(dataObj["box\(count)"]!["service"] as! String)
+                self.announceColors.append(dataObj["box\(count)"]!["color"] as! String)
+            }
+        }
+        else {
+            for count in 1...self.numBoxes {
+                self.newNumbers.append(dataObj[self.showServiceId]!["box\(count)"]!!["number"] as! String)
+                self.announceTerminals.append(dataObj[self.showServiceId]!["box\(count)"]!!["terminal"] as! String)
+                self.announceServices.append(dataObj[self.showServiceId]!["box\(count)"]!!["service"] as! String)
+                self.announceColors.append(dataObj[self.showServiceId]!["box\(count)"]!!["color"] as! String)
+            }
+        }
     }
     
 }
