@@ -18,11 +18,11 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
     @IBOutlet weak var broadcastNumbers: UICollectionView!
     @IBOutlet weak var priorityNumber: UILabel!
     @IBOutlet weak var serviceName: UILabel!
-    @IBOutlet weak var timeLeft: UILabel!
     @IBOutlet weak var peopleAhead: UILabel!
-    @IBOutlet weak var checkInLbl: UILabel!
     @IBOutlet weak var checkInBtn: UIBarButtonItem!
     @IBOutlet weak var tickerNotes: UILabel!
+    @IBOutlet weak var estimatedCallTime: UILabel!
+    @IBOutlet weak var peopleInLine: UILabel!
     
     var chosenBusiness: FQBusiness?
     var numBoxes = 0
@@ -46,6 +46,8 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
         // Do any additional setup after loading the view
         self.broadcastNumbers.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = self.chosenBusiness?.name
+        self.checkInStatus.layer.cornerRadius = 10.0
+        self.checkInStatus.clipsToBounds = true
         //let broadcastHeight = UIScreen.mainScreen().bounds.height / 2.0
         //var broadcastNumbersFrame = self.broadcastNumbers.frame
         //broadcastNumbersFrame.size.height = broadcastHeight
@@ -91,6 +93,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FQBroadcastCollectionViewCell", forIndexPath: indexPath) as! FQBroadcastCollectionViewCell
         
         // Configure the cell
+        cell.layer.cornerRadius = 10.0
         if !self.announceNumbers.isEmpty {
             cell.number.text = self.displayBroadcastInfo(indexPath.row, broadcastInfo: self.announceNumbers)
             cell.terminalName.text = self.displayBroadcastInfo(indexPath.row, broadcastInfo: self.announceTerminals)
@@ -103,7 +106,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let cellWidth: CGFloat = (UIScreen.mainScreen().bounds.width / 2) - 2.0
+        let cellWidth: CGFloat = (UIScreen.mainScreen().bounds.width / 2) - 10.0
         return CGSize(width: cellWidth, height: 118.0)
     }
     
@@ -146,6 +149,7 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
     
     func timerCallbacks() {
         self.getBroadcastNumbers(self.chosenBusiness!.businessId!)
+        self.getServiceEstimates(self.queuedServiceId, closure: {})
     }
     
     func readyDingSound() {
@@ -225,8 +229,6 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
             self.priorityNumber.text = dataObj["user_priority_number"] as? String
             self.serviceName.text = dataObj["service_name"] as? String
             self.queuedServiceId = "\(dataObj["service_id"]!)"
-//            self.peopleAhead.text = "\(dataObj["number_people_ahead"]!)"
-//            self.timeLeft.text = "\(dataObj["estimated_time_left"]!)"
             let ticker1 = (dataObj["ticker_message"] as! String) + " "
             let ticker2 = (dataObj["ticker_message2"] as! String) + " "
             let ticker3 = (dataObj["ticker_message3"] as! String) + " "
@@ -234,6 +236,27 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
             let ticker5 = (dataObj["ticker_message5"] as! String) + " "
             self.tickerNotes.text = ticker1 + ticker2 + ticker3 + ticker4 + ticker5
             self.getCheckedIn(self.transaction_number)
+        }
+    }
+    
+    func getServiceEstimates(serviceId: String, closure: () -> Void) {
+        Alamofire.request(Router.getServiceEstimates(serviceId: serviceId)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            let dataObj = responseData.dictionaryObject!
+            let upperLimit = dataObj["upper_limit"] as! String
+            let lowerLimit = dataObj["lower_limit"] as! String
+            self.estimatedCallTime.text = lowerLimit + " ~ " + upperLimit
+            self.peopleInLine.text = "\(dataObj["numbers_ahead"]!)"
+            closure()
         }
     }
     

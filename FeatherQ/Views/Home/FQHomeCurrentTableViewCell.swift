@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class FQHomeCurrentTableViewCell: UITableViewCell {
 
@@ -29,6 +30,8 @@ class FQHomeCurrentTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        self.checkInLbl.layer.cornerRadius = 10.0
+        self.checkInLbl.clipsToBounds = true
     }
     
 }

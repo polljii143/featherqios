@@ -17,7 +17,7 @@ class FQRemoteQueueTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        self.getNumLbl.layer.cornerRadius = 5.0
+        self.getNumLbl.layer.cornerRadius = 10.0
         self.getNumLbl.clipsToBounds = true
     }
 

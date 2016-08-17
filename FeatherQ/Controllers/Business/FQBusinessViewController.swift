@@ -97,6 +97,7 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FQBroadcastCollectionViewCell", forIndexPath: indexPath) as! FQBroadcastCollectionViewCell
         
         // Configure the cell
+        cell.layer.cornerRadius = 20.0
         if !self.announceNumbers.isEmpty {
             cell.number.text = self.displayBroadcastInfo(indexPath.row, broadcastInfo: self.announceNumbers)
             cell.terminalName.text = self.displayBroadcastInfo(indexPath.row, broadcastInfo: self.announceTerminals)
@@ -111,7 +112,7 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let cellWidth: CGFloat = (UIScreen.mainScreen().bounds.width / 2.0)  - 2.0
+        let cellWidth: CGFloat = (UIScreen.mainScreen().bounds.width / 2.0)  - 10.0
         return CGSize(width: cellWidth, height: 118.0)
     }
     
@@ -154,30 +155,12 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
 //        self.presentViewController(alertBox, animated: true, completion: nil)
 //    }
 //    
-//    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-//        if Session.instance.inQueue || !self.serviceEnabled[indexPath.row] {
-//            return nil
-//        }
-//        return indexPath
-//    }
-    
-//    func getQueueService(user_id: String, service_id: String) {
-//        SwiftSpinner.show("Lining up..")
-//        Alamofire.request(Router.getQueueService(user_id: user_id, service_id: service_id)).responseJSON { response in
-//            if response.result.isFailure {
-//                debugPrint(response.result.error)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
-//                return
-//            }
-//            let responseData = JSON(data: response.data!)
-//            debugPrint(responseData)
-//            Session.instance.inQueue = true
-//            self.navigationController?.popViewControllerAnimated(true)
-//        }
-//    }
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        if Session.instance.inQueue || !self.serviceEnabled[indexPath.row] {
+            return nil
+        }
+        return indexPath
+    }
     
     @IBAction func showServiceBroadcast(sender: AnyObject) {
         if sender.selectedSegmentIndex == 0 {

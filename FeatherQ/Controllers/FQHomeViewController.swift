@@ -64,7 +64,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                 self.queueInfo["business_name"] = dataObj["business"]!["name"] as? String
                 self.queueInfo["business_address"] = dataObj["business"]!["address"] as? String
                 self.queueInfo["priority_number"] = dataObj["priority_number"] as? String
-                self.queueInfo["estimated_time_left"] = "\(dataObj["estimated_time_left"]!)"
+                self.queueInfo["estimated_time"] = dataObj["estimated_time"] as? String
                 self.queueInfo["last_called_number"] = dataObj["business"]!["last_called"]!!["queue_number"] as? String
                 self.queueInfo["last_called_service"] = dataObj["business"]!["last_called"]!!["service_name"] as? String
                 self.getCheckedIn(self.queueInfo["transaction_number"]!)
@@ -327,22 +327,18 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                         cell.businessAddress.text = self.queueInfo["business_address"]
                         cell.nowServing.text = self.queueInfo["last_called_service"]!
                         cell.currentNum.text = self.queueInfo["last_called_number"]!
-//                        cell.timeLeft.text = self.queueInfo["estimated_time_left"]! + "mins left"
+                        cell.timeLeft.text = self.queueInfo["estimated_time"]!
                         cell.yourNumber.text = self.queueInfo["priority_number"]
                     }
                     if Session.instance.checkedIn {
                         cell.checkInBtn.enabled = false
-                        cell.checkInLbl.font = UIFont.boldSystemFontOfSize(13)
-                        cell.checkInLbl.text = "You are now checked in."
-                        cell.checkInLbl.textColor = UIColor.whiteColor()
+                        cell.checkInLbl.text = "CHECKED IN"
                         cell.checkInLbl.backgroundColor = UIColor(red: 0, green: 0.5098, blue: 0, alpha: 1.0) /* #008200 */
                     }
                     else {
                         cell.checkInBtn.enabled = true
-                        cell.checkInLbl.text = "Check-In"
-//                        cell.checkInLbl.font = UIFont.systemFontOfSize(11)
-//                        cell.checkInLbl.textColor = UIColor.blackColor()
-                        //cell.checkInLbl.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) /* #ffffff */
+                        cell.checkInLbl.text = "NOT CHECKED IN"
+                        cell.checkInLbl.backgroundColor = UIColor(red: 0.7176, green: 0, blue: 0, alpha: 1.0) /* #b70000 */
                     }
                     return cell
                 }
