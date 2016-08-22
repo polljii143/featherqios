@@ -25,6 +25,7 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var availableNumber: UILabel!
     @IBOutlet weak var estimatedCallTime: UILabel!
     @IBOutlet weak var peopleInLine: UILabel!
+    @IBOutlet weak var getNumBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,7 @@ class FQGetNumberViewController: UIViewController, UITableViewDelegate, UITableV
         // Do any additional setup after loading the view.
         self.navigationItem.title = self.chosenBusiness?.name
         self.serviceNameLbl.text = self.serviceName
+        self.getNumBtn.layer.cornerRadius = 10
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -80,10 +80,11 @@ class FQHistoryViewController: UIViewController, UITableViewDataSource, UITableV
         let cell = tableView.dequeueReusableCellWithIdentifier("FQHistoryTableViewCell") as! FQHistoryTableViewCell
         cell.businessName.text = self.recentBusiness[indexPath.row].business_name
         
+        let currentDate = NSDate()
         let dateFormatter = NSDateFormatter()
         let stringDate = self.recentBusiness[indexPath.row].date
         let transactionDate = NSDate(timeIntervalSince1970: Double(stringDate!)!)
-        dateFormatter.dateStyle = .LongStyle
+        dateFormatter.dateStyle = .FullStyle
         cell.dateLastProcessed.text = dateFormatter.stringFromDate(transactionDate)
         
         cell.currentNumber.text = self.recentBusiness[indexPath.row].priority_number
@@ -102,8 +103,14 @@ class FQHistoryViewController: UIViewController, UITableViewDataSource, UITableV
             cell.status.textColor = UIColor(red: 0.7176, green: 0, blue: 0, alpha: 1.0) /* #b70000 */
         }
         else {
-            queueStatus = "QUEUING"
-            cell.status.textColor = UIColor.lightGrayColor()
+            if transactionDate.earlierDate(currentDate).isEqualToDate(transactionDate) {
+                queueStatus = "INVALID"
+                cell.status.textColor = UIColor.lightGrayColor()
+            }
+            else {
+                queueStatus = "QUEUING"
+                cell.status.textColor = UIColor.purpleColor()
+            }
         }
         cell.status.text = queueStatus
         
@@ -145,6 +152,20 @@ class FQHistoryViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         SwiftSpinner.show("Viewing..")
+    }
+    
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        let queueStatus = self.recentBusiness[indexPath.row].status
+        let currentDate = NSDate()
+        let stringDate = self.recentBusiness[indexPath.row].date
+        let transactionDate = NSDate(timeIntervalSince1970: Double(stringDate!)!)
+        if transactionDate.earlierDate(currentDate).isEqualToDate(transactionDate) && queueStatus == "0" {
+            let alertBox = UIAlertController(title: "NOT ALLOWED", message: "This number has been forcibly dropped due to not being served within the daily business operations.", preferredStyle: .Alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertBox, animated: true, completion: nil)
+            return nil
+        }
+        return indexPath
     }
     
 }

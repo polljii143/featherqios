@@ -30,10 +30,11 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
     var businessAddress = " "
     var businessStatus = "0"
     var priority_number = "0"
-    var time_issued = "0"
-    var time_called = "0"
+    var time_issued = 0
+    var time_called = 0
+    var time_checked_in = 0
     var transaction_number = "0"
-    var transaction_date = "0"
+    var transaction_date = 0
     var businessId = "0"
     var serviceId = "0"
     
@@ -71,13 +72,15 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
             self.businessName.text = dataObj["business_name"] as? String
             self.businessStatus = "\(dataObj["status"]!)"
             self.yourNumber.text = dataObj["priority_number"] as? String
-            self.time_issued = "\(dataObj["time_issued"]!)"
-            self.time_called = "\(dataObj["time_called"]!)"
+            self.time_issued = dataObj["time_issued"] as! Int
+            self.time_called = dataObj["time_called"] as! Int
+            self.time_checked_in = dataObj["time_checked_in"] as! Int
             self.ratingValue = "\(dataObj["rating"]!)"
-            self.transaction_date = "\(dataObj["transaction_date"]!)"
+            self.transaction_date = dataObj["transaction_date"] as! Int
             self.businessId = "\(dataObj["business_id"]!)"
             self.serviceName.text = dataObj["service_name"] as? String
             self.serviceId = "\(dataObj["service_id"]!)"
+            self.transactionData.reloadData()
             self.renderHistoryData()
             SwiftSpinner.hide()
         }
@@ -130,28 +133,39 @@ class FQRecentViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 4
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FQProfileTableViewCell") as! FQProfileTableViewCell
         let dateFormatter = NSDateFormatter()
-        dateFormatter.timeStyle = .ShortStyle
+        var transactionDate: NSDate?
         if indexPath.row == 0 {
-            let transactionDate = NSDate(timeIntervalSince1970: Double(self.time_issued)!)
-            cell.profileData.text = dateFormatter.stringFromDate(transactionDate)
-            cell.profileTitle.text = "Queued"
+            dateFormatter.dateStyle = .LongStyle
+            transactionDate = NSDate(timeIntervalSince1970: Double(self.transaction_date))
+            cell.profileTitle.text = "Date"
         }
         else if indexPath.row == 1 {
-            let transactionDate = NSDate(timeIntervalSince1970: Double(self.time_called)!)
-            cell.profileData.text = dateFormatter.stringFromDate(transactionDate)
+            dateFormatter.timeStyle = .ShortStyle
+            transactionDate = NSDate(timeIntervalSince1970: Double(self.time_issued))
+            cell.profileTitle.text = "Lined up"
+        }
+        else if indexPath.row == 2 {
+            dateFormatter.timeStyle = .ShortStyle
+            transactionDate = NSDate(timeIntervalSince1970: Double(self.time_checked_in))
+            cell.profileTitle.text = "Checked In"
+        }
+        else if indexPath.row == 3 {
+            dateFormatter.timeStyle = .ShortStyle
+            transactionDate = NSDate(timeIntervalSince1970: Double(self.time_called))
             cell.profileTitle.text = "Called"
         }
+        cell.profileData.text = dateFormatter.stringFromDate(transactionDate!)
         return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 59.0
+        return 44.0
     }
 
     @IBAction func rating1(sender: AnyObject) {
