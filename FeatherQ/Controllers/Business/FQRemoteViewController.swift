@@ -60,8 +60,8 @@ class FQRemoteViewController: UIViewController, UICollectionViewDelegateFlowLayo
     
     override func viewWillAppear(animated: Bool) {
         self.readyDingSound()
-        self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(FQRemoteViewController.timerCallbacks), userInfo: nil, repeats: true)
         self.getBusinessBroadcast(self.chosenBusiness!.businessId!, user_id: Session.instance.user_id)
+        self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(FQRemoteViewController.timerCallbacks), userInfo: nil, repeats: true)
     }
     
     override func didReceiveMemoryWarning() {

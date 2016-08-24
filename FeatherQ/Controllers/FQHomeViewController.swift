@@ -21,6 +21,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
     var nowServing = [String]()
     var filteredBusinesses = [String]()
     var queueInfo = [String:String]()
+    var timerCounter: NSTimer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,11 +37,18 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.getUserQueue()
+        self.getUserQueue(false)
+        self.timerCounter = NSTimer.scheduledTimerWithTimeInterval(180, target: self, selector: #selector(FQHomeViewController.timerCallbacks), userInfo: nil, repeats: true)
     }
     
-    func getUserQueue() {
-        SwiftSpinner.show("Fetching..");
+    override func viewDidDisappear(animated: Bool) {
+        self.timerCounter!.invalidate()
+    }
+    
+    func getUserQueue(updating: Bool) {
+        if !updating {
+            SwiftSpinner.show("Fetching..");
+        }
         Alamofire.request(Router.getUserQueue(user_id: Session.instance.user_id)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error)
@@ -63,10 +71,17 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                 self.queueInfo["business_id"] = "\(dataObj["business"]!["id"]!!)"
                 self.queueInfo["business_name"] = dataObj["business"]!["name"] as? String
                 self.queueInfo["business_address"] = dataObj["business"]!["address"] as? String
+                self.queueInfo["queued_service"] = dataObj["business"]!["queued_service"] as? String
                 self.queueInfo["priority_number"] = dataObj["priority_number"] as? String
                 self.queueInfo["estimated_time"] = dataObj["estimated_time"] as? String
                 self.queueInfo["last_called_number"] = dataObj["business"]!["last_called"]!!["queue_number"] as? String
                 self.queueInfo["last_called_service"] = dataObj["business"]!["last_called"]!!["service_name"] as? String
+                if self.queueInfo["last_called_number"] == nil {
+                    self.queueInfo["last_called_number"] = " "
+                }
+                if self.queueInfo["last_called_service"] == nil {
+                    self.queueInfo["last_called_service"] = " "
+                }
                 self.getCheckedIn(self.queueInfo["transaction_number"]!)
             }
         }
@@ -109,6 +124,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                 return
             }
             let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
             for businessData in responseData {
                 let dataObj = businessData.1.dictionaryObject!
                 let last_called = dataObj["last_called_array"]!
@@ -324,7 +340,7 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                     let cell = tableView.dequeueReusableCellWithIdentifier("FQHomeCurrentTableViewCell") as! FQHomeCurrentTableViewCell
                     if !self.queueInfo.isEmpty {
                         cell.businessName.text = self.queueInfo["business_name"]
-                        cell.businessAddress.text = self.queueInfo["business_address"]
+                        cell.businessAddress.text = self.queueInfo["queued_service"] //self.queueInfo["business_address"]
                         cell.nowServing.text = self.queueInfo["last_called_service"]!
                         cell.currentNum.text = self.queueInfo["last_called_number"]!
                         cell.timeLeft.text = self.queueInfo["estimated_time"]!
@@ -348,16 +364,8 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                     cell.businessLogo.image = UIImage(named: "AboutLogo")
                     cell.businessName.text = self.activeBusiness[indexPath.row].name
                     cell.businessAddress.text = self.activeBusiness[indexPath.row].localAddress
-                    var last_called_service = self.activeBusiness[indexPath.row].last_called_service
-                    var last_called_number = self.activeBusiness[indexPath.row].last_called_number
-                    if last_called_service == nil {
-                        last_called_service = " "
-                    }
-                    if last_called_number == nil {
-                        last_called_number = " "
-                    }
-                    cell.nowServing.text = last_called_number!
-                    cell.serviceName.text = last_called_service!
+                    cell.nowServing.text = self.activeBusiness[indexPath.row].last_called_number
+                    cell.serviceName.text = self.activeBusiness[indexPath.row].last_called_service
                     return cell
                 }
                 else {
@@ -366,16 +374,8 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                     cell.businessLogo.image = UIImage(named: "AboutLogo")
                     cell.businessName.text = self.otherBusiness[indexPath.row].name
                     cell.businessAddress.text = self.otherBusiness[indexPath.row].localAddress
-                    var last_called_service = self.otherBusiness[indexPath.row].last_called_service
-                    var last_called_number = self.otherBusiness[indexPath.row].last_called_number
-                    if last_called_service == nil {
-                        last_called_service = " "
-                    }
-                    if last_called_number == nil {
-                        last_called_number = " "
-                    }
-                    cell.nowServing.text = last_called_number!
-                    cell.serviceName.text = last_called_service!
+                    cell.nowServing.text = self.otherBusiness[indexPath.row].last_called_number
+                    cell.serviceName.text = self.otherBusiness[indexPath.row].last_called_service
                     return cell
                 }
             }
@@ -386,32 +386,16 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                     cell.businessLogo.image = UIImage(named: "AboutLogo")
                     cell.businessName.text = self.activeBusiness[indexPath.row].name
                     cell.businessAddress.text = self.activeBusiness[indexPath.row].localAddress
-                    var last_called_service = self.activeBusiness[indexPath.row].last_called_service
-                    var last_called_number = self.activeBusiness[indexPath.row].last_called_number
-                    if last_called_service == nil {
-                        last_called_service = " "
-                    }
-                    if last_called_number == nil {
-                        last_called_number = " "
-                    }
-                    cell.nowServing.text = last_called_number!
-                    cell.serviceName.text = last_called_service!
+                    cell.nowServing.text = self.activeBusiness[indexPath.row].last_called_number
+                    cell.serviceName.text = self.activeBusiness[indexPath.row].last_called_service
                 }
                 else {
                     cell.servingLabel.hidden = true
                     cell.businessLogo.image = UIImage(named: "AboutLogo")
                     cell.businessName.text = self.otherBusiness[indexPath.row].name
                     cell.businessAddress.text = self.otherBusiness[indexPath.row].localAddress
-                    var last_called_service = self.otherBusiness[indexPath.row].last_called_service
-                    var last_called_number = self.otherBusiness[indexPath.row].last_called_number
-                    if last_called_service == nil {
-                        last_called_service = " "
-                    }
-                    if last_called_number == nil {
-                        last_called_number = " "
-                    }
-                    cell.nowServing.text = last_called_number!
-                    cell.serviceName.text = last_called_service!
+                    cell.nowServing.text = self.otherBusiness[indexPath.row].last_called_number
+                    cell.serviceName.text = self.otherBusiness[indexPath.row].last_called_service
                 }
                 return cell
             }
@@ -464,5 +448,9 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
             self.tableView.reloadData()
             SwiftSpinner.hide()
         }
+    }
+    
+    func timerCallbacks() {
+        self.getUserQueue(true)
     }
 }
