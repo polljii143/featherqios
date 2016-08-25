@@ -71,8 +71,8 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                 self.queueInfo["business_id"] = "\(dataObj["business"]!["id"]!!)"
                 self.queueInfo["business_name"] = dataObj["business"]!["name"] as? String
                 self.queueInfo["business_address"] = dataObj["business"]!["address"] as? String
-                self.queueInfo["queued_service"] = dataObj["business"]!["queued_service"] as? String
                 self.queueInfo["priority_number"] = dataObj["priority_number"] as? String
+                self.queueInfo["queued_service"] = dataObj["business"]!["queued_service"] as? String
                 self.queueInfo["estimated_time"] = dataObj["estimated_time"] as? String
                 self.queueInfo["last_called_number"] = dataObj["business"]!["last_called"]!!["queue_number"] as? String
                 self.queueInfo["last_called_service"] = dataObj["business"]!["last_called"]!!["service_name"] as? String
@@ -82,6 +82,8 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
                 if self.queueInfo["last_called_service"] == nil {
                     self.queueInfo["last_called_service"] = " "
                 }
+                Session.instance.priorityNumber = self.queueInfo["priority_number"]!
+                Session.instance.queueService = self.queueInfo["queued_service"]!
                 self.getCheckedIn(self.queueInfo["transaction_number"]!)
             }
         }
@@ -426,9 +428,6 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
         }))
         alertBox.addAction(UIAlertAction(title: "NO", style: .Default, handler: nil))
         self.presentViewController(alertBox, animated: true, completion: nil)
-    }
-    
-    @IBAction func composeMessage(sender: AnyObject) {
     }
     
     func getCheckinTransaction(transaction_number: String) {

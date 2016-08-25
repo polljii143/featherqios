@@ -23,6 +23,9 @@ class Session {
     var checkedIn = false
     var serviceFormData = [[String:[[String:String]]]]()
     var deviceToken = ""
+    var priorityNumber = ""
+    var queueService = ""
+    var callingTerminal = ""
     
     init(){
         

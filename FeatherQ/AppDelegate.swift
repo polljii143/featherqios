@@ -68,7 +68,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         if application.applicationState == .Active {
-            debugPrint("yoloooo")
+            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FQModalViewController") as! FQModalViewController
+            Session.instance.callingTerminal = userInfo["aps"]!["terminal_name"] as! String
+            if !Session.instance.callingTerminal.isEmpty {
+                modalViewController.modalPresentationStyle = .OverCurrentContext
+                self.window?.currentViewController()?.presentViewController(modalViewController, animated: true, completion: nil)
+            }
         }
     }
     
