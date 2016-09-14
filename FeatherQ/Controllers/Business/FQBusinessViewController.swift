@@ -17,7 +17,6 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var broadcastNumbers: UICollectionView!
     @IBOutlet weak var serviceList: UITableView!
     @IBOutlet weak var tickerNotes: UILabel!
-    @IBOutlet weak var serviceFilter: UISegmentedControl!
     
     var chosenBusiness: FQBusiness?
     var numBoxes = 0
@@ -86,6 +85,11 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
                 destView.serviceName = self.serviceNames[indexPath.row]
             }
         }
+        else if segue.identifier == "serviceFilter" {
+            let destView = segue.destinationViewController as! FQFilterBroadcastServiceTableViewController
+            destView.serviceIds = self.serviceIds
+            destView.serviceNames = self.serviceNames
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -98,6 +102,9 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         
         // Configure the cell
         cell.layer.cornerRadius = 20.0
+        if indexPath.row == 0 {
+            cell.tag = 143 // use this tag for blinking effect of newly called numbers
+        }
         if !self.announceNumbers.isEmpty {
             cell.number.text = self.displayBroadcastInfo(indexPath.row, broadcastInfo: self.announceNumbers)
             cell.terminalName.text = self.displayBroadcastInfo(indexPath.row, broadcastInfo: self.announceTerminals)
@@ -162,16 +169,9 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
         return indexPath
     }
     
-    @IBAction func showServiceBroadcast(sender: AnyObject) {
-        if sender.selectedSegmentIndex == 0 {
-            self.showServiceId = ""
-        }
-        else {
-            self.showServiceId = self.serviceIds[sender.selectedSegmentIndex-1]
-        }
-    }
-    
     func timerCallbacks() {
+        let blinkNum = self.view.viewWithTag(143)
+        blinkNum?.hidden = !blinkNum!.hidden
         self.getBroadcastNumbers(self.chosenBusiness!.businessId!)
     }
     
@@ -206,18 +206,8 @@ class FQBusinessViewController: UIViewController, UITableViewDataSource, UITable
                 self.serviceIds.append("\(dataObj["service_id"]!)")
                 self.serviceEnabled.append(dataObj["enabled"] as! Bool)
             }
-            self.initializeServiceFilters()
             self.serviceList.reloadData()
             SwiftSpinner.hide()
-        }
-    }
-    
-    func initializeServiceFilters() {
-        self.serviceFilter.removeAllSegments()
-        self.serviceFilter.insertSegmentWithTitle("All", atIndex: 0, animated: false)
-        self.serviceFilter.selectedSegmentIndex = 0
-        for i in 0 ..< self.serviceNames.count {
-            self.serviceFilter.insertSegmentWithTitle(self.serviceNames[i], atIndex: i+1, animated: false)
         }
     }
     

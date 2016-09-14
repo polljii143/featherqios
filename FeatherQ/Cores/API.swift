@@ -58,6 +58,7 @@ enum Router: URLRequestConvertible{
     case getUserRecords(transactionNumber: String)
     case getViewRecord(recordId: String)
     case postSubmitForm(userId: String, transactionNumber: String, formSubmissions: [[String:[[String:String]]]], serviceId: String, serviceName: String)
+    case getServiceTerminals(serviceId: String)
     
     var method: Alamofire.Method {
         switch self {
@@ -158,6 +159,8 @@ enum Router: URLRequestConvertible{
             return "/mobile/view-record/" + recordId
         case .postSubmitForm:
             return "/mobile/submit-form"
+        case .getServiceTerminals(let serviceId):
+            return "/mobile/service-terminals/" + serviceId
         default:
             return "/"
         }

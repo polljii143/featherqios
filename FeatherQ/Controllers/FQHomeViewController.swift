@@ -314,6 +314,9 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if Session.instance.inQueue && indexPath.section == 0 && !self.filterSearch.active {
+            if Session.instance.isCalled {
+                return 50.0
+            }
             return 200.0
         }
         return 97.0
@@ -340,23 +343,28 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
             if Session.instance.inQueue {
                 if indexPath.section == 0 {
                     let cell = tableView.dequeueReusableCellWithIdentifier("FQHomeCurrentTableViewCell") as! FQHomeCurrentTableViewCell
-                    if !self.queueInfo.isEmpty {
-                        cell.businessName.text = self.queueInfo["business_name"]
-                        cell.businessAddress.text = self.queueInfo["queued_service"] //self.queueInfo["business_address"]
-                        cell.nowServing.text = self.queueInfo["last_called_service"]!
-                        cell.currentNum.text = self.queueInfo["last_called_number"]!
-                        cell.timeLeft.text = self.queueInfo["estimated_time"]!
-                        cell.yourNumber.text = self.queueInfo["priority_number"]
-                    }
-                    if Session.instance.checkedIn {
-                        cell.checkInBtn.enabled = false
-                        cell.checkInLbl.text = "CHECKED IN"
-                        cell.checkInLbl.backgroundColor = UIColor(red: 0, green: 0.5098, blue: 0, alpha: 1.0) /* #008200 */
+                    if Session.instance.isCalled {
+                        cell.addSubview(FQHomeCalledNumber(priorityNumber: Session.instance.priorityNumber, serviceName: Session.instance.queueService, terminalName: Session.instance.callingTerminal))
                     }
                     else {
-                        cell.checkInBtn.enabled = true
-                        cell.checkInLbl.text = "NOT CHECKED IN"
-                        cell.checkInLbl.backgroundColor = UIColor(red: 0.7176, green: 0, blue: 0, alpha: 1.0) /* #b70000 */
+                        if !self.queueInfo.isEmpty {
+                            cell.businessName.text = self.queueInfo["business_name"]
+                            cell.businessAddress.text = self.queueInfo["queued_service"] //self.queueInfo["business_address"]
+                            cell.nowServing.text = self.queueInfo["last_called_service"]!
+                            cell.currentNum.text = self.queueInfo["last_called_number"]!
+                            cell.timeLeft.text = self.queueInfo["estimated_time"]!
+                            cell.yourNumber.text = self.queueInfo["priority_number"]
+                        }
+                        if Session.instance.checkedIn {
+                            cell.checkInBtn.enabled = false
+                            cell.checkInLbl.text = "CHECKED IN"
+                            cell.checkInLbl.backgroundColor = UIColor(red: 0, green: 0.5098, blue: 0, alpha: 1.0) /* #008200 */
+                        }
+                        else {
+                            cell.checkInBtn.enabled = true
+                            cell.checkInLbl.text = "NOT CHECKED IN"
+                            cell.checkInLbl.backgroundColor = UIColor(red: 0.7176, green: 0, blue: 0, alpha: 1.0) /* #b70000 */
+                        }
                     }
                     return cell
                 }
@@ -405,7 +413,14 @@ class FQHomeViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        //SwiftSpinner.show("Viewing..")
+        if Session.instance.isCalled {
+            if indexPath.section == 0 {
+                let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FQModalViewController") as! FQModalViewController
+                modalViewController.modalPresentationStyle = .OverCurrentContext
+                self.presentViewController(modalViewController, animated: true, completion: nil)
+                return nil
+            }
+        }
         return indexPath
     }
     

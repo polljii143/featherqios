@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         if FBSDKAccessToken.currentAccessToken() != nil {
+            self.loadIsCalledBool()
             self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FQLoaderViewController")
         }
         return true
@@ -68,11 +69,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         if application.applicationState == .Active {
-            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FQModalViewController") as! FQModalViewController
-            Session.instance.callingTerminal = userInfo["aps"]!["terminal_name"] as! String
-            if !Session.instance.callingTerminal.isEmpty {
+            debugPrint(userInfo["aps"]!)
+            let actionType = userInfo["aps"]!["msg_type"] as! String
+            if actionType == "call" {
+                Session.instance.callingTerminal = userInfo["aps"]!["terminal_name"] as! String
+                self.saveIsCalledBool(true, callingTerminal: Session.instance.callingTerminal)
+                let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FQModalViewController") as! FQModalViewController
                 modalViewController.modalPresentationStyle = .OverCurrentContext
                 self.window?.currentViewController()?.presentViewController(modalViewController, animated: true, completion: nil)
+            }
+            else {
+                self.saveIsCalledBool(false, callingTerminal: "")
             }
         }
     }
@@ -101,6 +108,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func registerForPushNotifications(application: UIApplication) {
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
+    }
+    
+    func loadIsCalledBool() {
+        let preferences = NSUserDefaults.standardUserDefaults()
+        if preferences.boolForKey("isCalled") == true {
+            Session.instance.isCalled = true
+            Session.instance.callingTerminal = preferences.stringForKey("callingTerminal")!
+        }
+    }
+    
+    func saveIsCalledBool(boolVal: Bool, callingTerminal: String) {
+        let preferences = NSUserDefaults.standardUserDefaults()
+        preferences.setValue(boolVal, forKey: "isCalled")
+        preferences.setValue(callingTerminal, forKey: "callingTerminal")
+        preferences.synchronize()
+        Session.instance.isCalled = boolVal
     }
 
 }

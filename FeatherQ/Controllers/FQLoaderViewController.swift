@@ -43,8 +43,8 @@ class FQLoaderViewController: UIViewController {
                 Session.instance.lastName = fbLastName
                 Session.instance.email = fbEmail
                 Session.instance.gender = fbGender
-                Session.instance.address = dataObj["local_address"] as! String
-                Session.instance.phone = dataObj["phone"] as! String
+                Session.instance.address = (dataObj["local_address"] as? String)!
+                Session.instance.phone = (dataObj["phone"] as? String)!
                 Session.instance.user_id = "\(dataObj["user_id"]!)"
                 do{
                     try Locksmith.updateData(["access_token": responseData["access_token"].stringValue], forUserAccount: "fqiosapp")
